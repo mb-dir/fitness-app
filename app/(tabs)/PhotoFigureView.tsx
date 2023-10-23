@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Home() {
+export default function PhotoFigureView() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home Screen</Text>
+      <Text style={styles.title}>PhotoFigureView</Text>
       <View style={styles.separator} />
     </View>
   );

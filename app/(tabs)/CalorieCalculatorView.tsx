@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Home() {
+export default function CalorieCalculatorView() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home Screen</Text>
+      <Text style={styles.title}>CalorieCalculatorView</Text>
       <View style={styles.separator} />
     </View>
   );

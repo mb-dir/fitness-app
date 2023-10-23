@@ -1,18 +1,8 @@
-import { Link, Tabs } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { StyleSheet, useColorScheme } from "react-native";
 
 import Colors from "../../constants/Colors";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+import { Tabs } from "expo-router";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -26,31 +16,62 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Tab One",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? "light"].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+          title: "Home",
+          tabBarIcon: () => <MaterialIcons name="home" style={styles.icon} />,
+        }}
+      />
+      <Tabs.Screen
+        name="BMIView"
+        options={{
+          title: "BMI",
+          tabBarIcon: () => (
+            <MaterialIcons name="calculate" style={styles.icon} />
           ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="PedometrView"
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Krokomierz",
+          tabBarIcon: () => (
+            <MaterialCommunityIcons name="run-fast" style={styles.icon} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="ScheduleTrainingView"
+        options={{
+          title: "Twój Trening",
+          tabBarIcon: () => (
+            <MaterialCommunityIcons name="weight-lifter" style={styles.icon} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="CalorieCalculatorView"
+        options={{
+          title: "KCAL",
+          tabBarIcon: () => (
+            <MaterialCommunityIcons name="food-apple" style={styles.icon} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="PhotoFigureView"
+        options={{
+          title: "Sylwetka",
+          tabBarIcon: () => (
+            <MaterialIcons name="add-photo-alternate" style={styles.icon} />
+          ),
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    fontSize: 26,
+    marginBottom: -10,
+  },
+});
