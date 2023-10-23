@@ -1,8 +1,8 @@
+import { Link, Tabs } from "expo-router";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet, useColorScheme } from "react-native";
+import { Pressable, StyleSheet, Text, useColorScheme } from "react-native";
 
 import Colors from "../../constants/Colors";
-import { Tabs } from "expo-router";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -26,6 +26,19 @@ export default function TabLayout() {
           title: "BMI",
           tabBarIcon: () => (
             <MaterialIcons name="calculate" style={styles.icon} />
+          ),
+          headerRight: () => (
+            <Link href="/InfoModal" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <MaterialCommunityIcons
+                    name="progress-question"
+                    size={26}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
           ),
         }}
       />
