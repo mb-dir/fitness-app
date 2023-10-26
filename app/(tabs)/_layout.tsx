@@ -3,6 +3,7 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, useColorScheme } from "react-native";
 
 import Colors from "../../constants/Colors";
+import { blue } from "../../constants/Colors";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -17,15 +18,23 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: () => <MaterialIcons name="home" style={styles.icon} />,
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="home"
+              style={[styles.icon, { color: focused ? blue : color }]}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="BMIView"
         options={{
           title: "BMI",
-          tabBarIcon: () => (
-            <MaterialIcons name="calculate" style={styles.icon} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="calculate"
+              style={[styles.icon, { color: focused ? blue : color }]}
+            />
           ),
           headerRight: () => (
             <Link href="/InfoModal" asChild>
@@ -46,8 +55,11 @@ export default function TabLayout() {
         name="PedometrView"
         options={{
           title: "Krokomierz",
-          tabBarIcon: () => (
-            <MaterialCommunityIcons name="run-fast" style={styles.icon} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name="run-fast"
+              style={[styles.icon, { color: focused ? blue : color }]}
+            />
           ),
         }}
       />
@@ -55,8 +67,11 @@ export default function TabLayout() {
         name="ScheduleTrainingView"
         options={{
           title: "Twój Trening",
-          tabBarIcon: () => (
-            <MaterialCommunityIcons name="weight-lifter" style={styles.icon} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name="weight-lifter"
+              style={[styles.icon, { color: focused ? blue : color }]}
+            />
           ),
         }}
       />
@@ -64,8 +79,11 @@ export default function TabLayout() {
         name="CalorieCalculatorView"
         options={{
           title: "KCAL",
-          tabBarIcon: () => (
-            <MaterialCommunityIcons name="food-apple" style={styles.icon} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name="food-apple"
+              style={[styles.icon, { color: focused ? blue : color }]}
+            />
           ),
         }}
       />
@@ -73,8 +91,11 @@ export default function TabLayout() {
         name="PhotoFigureView"
         options={{
           title: "Sylwetka",
-          tabBarIcon: () => (
-            <MaterialIcons name="add-photo-alternate" style={styles.icon} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="add-photo-alternate"
+              style={[styles.icon, { color: focused ? blue : color }]}
+            />
           ),
         }}
       />
