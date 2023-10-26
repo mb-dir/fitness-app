@@ -15,7 +15,17 @@ export default function BMIView() {
     }
   };
 
-  // const showBMIExplanation = bmiValue;
+  const showBMIExplanation = (bmiValue: number) => {
+    if (bmiValue < 18.5) {
+      return "Twój wskaźnik BMI wskazuje na niedowage.";
+    } else if (bmiValue >= 18.5 && bmiValue <= 24.9) {
+      return "Twój wskaźnik BMI jest prawidłowy.";
+    } else if (bmiValue >= 25 && bmiValue <= 29.9) {
+      return "Twój wskaźnik BMI wskazuje na nadwage.";
+    } else {
+      return "Twój wskaźnik BMI wskazuje na otyłość";
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Twój wzrost (cm):</Text>
@@ -40,7 +50,10 @@ export default function BMIView() {
       />
 
       {bmi !== null && (
-        <Text style={styles.result}>Twój wskaźnik BMI wynosi: {bmi}</Text>
+        <>
+          <Text style={styles.result}>Twój wskaźnik BMI wynosi: {bmi}</Text>
+          <Text style={styles.info}>{showBMIExplanation(bmi)}</Text>
+        </>
       )}
     </View>
   );
@@ -51,6 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 10,
   },
   label: {
     fontSize: 18,
@@ -66,6 +80,11 @@ const styles = StyleSheet.create({
   },
   result: {
     fontSize: 24,
+    marginTop: 20,
+    textAlign: "center",
+  },
+  info: {
+    fontSize: 18,
     marginTop: 20,
   },
 });
