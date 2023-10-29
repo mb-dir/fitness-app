@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Keyboard,
   StyleSheet,
@@ -7,6 +8,13 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+type bmiResult = {
+  result: number;
+  date: string;
+};
 
 export default function BMICalculator() {
   const [height, setHeight] = useState<string>("");
@@ -22,6 +30,24 @@ export default function BMICalculator() {
       Keyboard.dismiss();
     } else {
       setBMI(null);
+    }
+  };
+
+  const saveResult = async (result: number) => {
+    try {
+      const date = new Date().toLocaleString();
+      const resultObj: bmiResult = { result, date };
+
+      const existingResults =
+        (await AsyncStorage.getItem("bmiResults")) || "[]";
+      const results = JSON.parse(existingResults);
+
+      results.push(resultObj);
+
+      await AsyncStorage.setItem("bmiResults", JSON.stringify(results));
+      Alert.alert("Informacja", "Twój wynik został zapisany", [{ text: "OK" }]);
+    } catch (error) {
+      console.error("Error saving BMI result: ", error);
     }
   };
 
@@ -63,6 +89,7 @@ export default function BMICalculator() {
         <>
           <Text style={styles.result}>Twój wskaźnik BMI wynosi: {bmi}</Text>
           <Text style={styles.info}>{showBMIExplanation(bmi)}</Text>
+          <Button title="Zapisz wynik" onPress={() => saveResult(bmi)} />
         </>
       ) : (
         <Text style={styles.info}>Uzupełnij dane, aby obliczyć swoje BMI</Text>
@@ -97,6 +124,6 @@ const styles = StyleSheet.create({
   },
   info: {
     fontSize: 18,
-    marginTop: 20,
+    margin: 20,
   },
 });
