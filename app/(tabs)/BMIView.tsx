@@ -1,4 +1,11 @@
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 
 export default function BMIView() {
@@ -12,6 +19,7 @@ export default function BMIView() {
       const weightKg = +weight;
       const bmiValue = weightKg / (heightMeters * heightMeters);
       setBMI(+bmiValue.toFixed(2));
+      Keyboard.dismiss();
     }
   };
 
