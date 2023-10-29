@@ -20,6 +20,8 @@ export default function BMICalculator() {
       const bmiValue = weightKg / (heightMeters * heightMeters);
       setBMI(+bmiValue.toFixed(2));
       Keyboard.dismiss();
+    } else {
+      setBMI(null);
     }
   };
 
@@ -57,11 +59,13 @@ export default function BMICalculator() {
         onPress={() => calculateBMI(height, weight)}
       />
 
-      {bmi !== null && (
+      {bmi ? (
         <>
           <Text style={styles.result}>Twój wskaźnik BMI wynosi: {bmi}</Text>
           <Text style={styles.info}>{showBMIExplanation(bmi)}</Text>
         </>
+      ) : (
+        <Text style={styles.info}>Uzupełnij dane, aby obliczyć swoje BMI</Text>
       )}
     </View>
   );
