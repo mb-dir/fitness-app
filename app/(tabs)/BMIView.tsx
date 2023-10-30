@@ -1,27 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import BMICalculator from "../../components/BMICalculator";
+import BMISavedResults from "../../components/BMISavedResults";
+import React from "react";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 export default function BMIView() {
+  const Tab = createMaterialTopTabNavigator();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>BMIView</Text>
-      <View style={styles.separator} />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Kalkulator BMI" component={BMICalculator} />
+      <Tab.Screen name="Zapisane wyniki" component={BMISavedResults} />
+    </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
