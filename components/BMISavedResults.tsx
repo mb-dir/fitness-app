@@ -1,4 +1,10 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -23,6 +29,18 @@ export default function BMISavedResults() {
     fetchSavedResults();
   }, [isFocused]);
 
+  const deleteResult = async (index: number) => {
+    try {
+      const updatedResults = [...results];
+      updatedResults.splice(index, 1);
+
+      await AsyncStorage.setItem("bmiResults", JSON.stringify(updatedResults));
+      setResults(updatedResults);
+    } catch (error) {
+      console.error("Error deleting result: ", error);
+    }
+  };
+
   return (
     <FlatList
       data={results}
@@ -31,16 +49,16 @@ export default function BMISavedResults() {
         <View style={styles.headerItem}>
           <Text style={styles.headerText}>Data</Text>
           <Text style={styles.headerText}>BMI</Text>
+          <Text style={styles.headerText}>Akcje</Text>
         </View>
       }
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <View style={styles.resultItem}>
-          <View style={styles.dateContainer}>
-            <Text style={styles.dateText}>{item.date}</Text>
-          </View>
-          <View style={styles.bmiContainer}>
-            <Text style={styles.bmiText}>{item.result}</Text>
-          </View>
+          <Text>{item.date}</Text>
+          <Text style={styles.value}>{item.result}</Text>
+          <TouchableOpacity onPress={() => deleteResult(index)}>
+            <Text style={styles.deleteButton}>Usuń</Text>
+          </TouchableOpacity>
         </View>
       )}
     />
@@ -63,22 +81,17 @@ const styles = StyleSheet.create({
   resultItem: {
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingHorizontal: 32,
     paddingVertical: 12,
-    paddingHorizontal: 36,
     borderBottomWidth: 1,
     borderColor: "#ccc",
   },
-  dateContainer: {
-    flex: 1,
+  value: {
+    paddingRight: 12,
   },
-  bmiContainer: {
-    flex: 1,
-  },
-  dateText: {
-    fontSize: 16,
-  },
-  bmiText: {
-    fontSize: 16,
-    textAlign: "right",
+  deleteButton: {
+    fontWeight: "bold",
+    color: "red",
+    paddingHorizontal: 18,
   },
 });
