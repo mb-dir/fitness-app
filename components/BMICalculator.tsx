@@ -11,7 +11,7 @@ import React, { useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type bmiResult = {
+export type bmiResult = {
   result: number;
   date: string;
 };

@@ -8,14 +8,15 @@ import {
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { bmiResult } from "./BMICalculator";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function BMISavedResults() {
-  const [results, setResults] = useState<any>([]);
+  const [results, setResults] = useState<bmiResult[]>([]);
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    async function fetchSavedResults() {
+    const fetchSavedResults = async () => {
       try {
         const savedResults = await AsyncStorage.getItem("bmiResults");
         if (savedResults) {
@@ -24,7 +25,7 @@ export default function BMISavedResults() {
       } catch (error) {
         console.error("Error fetching saved results: ", error);
       }
-    }
+    };
 
     fetchSavedResults();
   }, [isFocused]);
