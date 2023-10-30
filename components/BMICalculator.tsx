@@ -35,7 +35,13 @@ export default function BMICalculator() {
 
   const saveResult = async (result: number) => {
     try {
-      const date = new Date().toLocaleString();
+      const currentDate = new Date();
+      const day = currentDate.getDate();
+      const month = currentDate.getMonth() + 1;
+      const year = currentDate.getFullYear();
+
+      const date = `${day}/${month}/${year}`;
+
       const resultObj: bmiResult = { result, date };
 
       const existingResults =
