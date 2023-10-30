@@ -53,7 +53,11 @@ export default function BMICalculator() {
       await AsyncStorage.setItem("bmiResults", JSON.stringify(results));
       Alert.alert("Informacja", "Twój wynik został zapisany", [{ text: "OK" }]);
     } catch (error) {
-      console.error("Error saving BMI result: ", error);
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
     }
   };
 

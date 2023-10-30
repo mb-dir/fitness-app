@@ -1,4 +1,5 @@
 import {
+  Alert,
   FlatList,
   StyleSheet,
   Text,
@@ -38,7 +39,11 @@ export default function BMISavedResults() {
       await AsyncStorage.setItem("bmiResults", JSON.stringify(updatedResults));
       setResults(updatedResults);
     } catch (error) {
-      console.error("Error deleting result: ", error);
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
     }
   };
 
