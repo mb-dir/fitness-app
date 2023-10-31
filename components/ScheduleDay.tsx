@@ -1,6 +1,17 @@
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Button,
+  FlatList,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { useEffect, useState } from "react";
 
-import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 
 export enum DAY_OF_WEEK {
   Sunday = "Niedziela",
@@ -19,6 +30,53 @@ type props = {
 export default function ScheduleTrainingView({ day }: props) {
   const [workout, setWorkout] = useState<string>("");
   const [reps, setReps] = useState<string>("");
+  const [workouts, setWorkouts] = useState<any[]>([]);
+  const isFocused = useIsFocused();
+
+  const stateReset = () => {
+    setWorkout("");
+    setReps("");
+  };
+
+  const getWorkouts = async () => {
+    try {
+      const existingWorkouts = await AsyncStorage.getItem(day);
+      if (existingWorkouts) {
+        setWorkouts(JSON.parse(existingWorkouts));
+      }
+    } catch (error) {
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
+    }
+  };
+
+  const addWorkout = async () => {
+    const newWorkout = { workout, reps };
+    try {
+      const existingWorkouts = await AsyncStorage.getItem(day);
+      const workouts = existingWorkouts ? JSON.parse(existingWorkouts) : [];
+      workouts.push(newWorkout);
+      setWorkouts(workouts);
+      await AsyncStorage.setItem(day, JSON.stringify(workouts));
+      stateReset();
+      Keyboard.dismiss();
+      Alert.alert("Informacja", "Ćwiczenie zostało zapisane", [{ text: "OK" }]);
+    } catch (error) {
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
+    }
+  };
+
+  useEffect(() => {
+    getWorkouts();
+  }, [isFocused]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Dodaj ćwiczenie</Text>
