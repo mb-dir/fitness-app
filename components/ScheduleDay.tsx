@@ -28,10 +28,15 @@ type props = {
   day: DAY_OF_WEEK;
 };
 
+type workout = {
+  workout: string;
+  reps: string;
+};
+
 export default function ScheduleTrainingView({ day }: props) {
   const [workout, setWorkout] = useState<string>("");
   const [reps, setReps] = useState<string>("");
-  const [workouts, setWorkouts] = useState<any[]>([]);
+  const [workouts, setWorkouts] = useState<workout[]>([]);
   const isFocused = useIsFocused();
 
   const stateReset = () => {
@@ -59,10 +64,12 @@ export default function ScheduleTrainingView({ day }: props) {
       Alert.alert("Błąd", "Musisz wprowadzić wszystkie dane");
       return;
     }
-    const newWorkout = { workout, reps };
+    const newWorkout: workout = { workout, reps };
     try {
       const existingWorkouts = await AsyncStorage.getItem(day);
-      const workouts = existingWorkouts ? JSON.parse(existingWorkouts) : [];
+      const workouts: workout[] = existingWorkouts
+        ? JSON.parse(existingWorkouts)
+        : [];
       workouts.push(newWorkout);
       setWorkouts(workouts);
       await AsyncStorage.setItem(day, JSON.stringify(workouts));
@@ -82,7 +89,7 @@ export default function ScheduleTrainingView({ day }: props) {
     try {
       const existingWorkouts = await AsyncStorage.getItem(day);
       if (existingWorkouts) {
-        const parsedWorkouts = JSON.parse(existingWorkouts);
+        const parsedWorkouts: workout[] = JSON.parse(existingWorkouts);
         parsedWorkouts.splice(index, 1);
         setWorkouts(parsedWorkouts);
         await AsyncStorage.setItem(day, JSON.stringify(parsedWorkouts));
