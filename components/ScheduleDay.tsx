@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { useEffect, useState } from "react";
@@ -95,9 +96,29 @@ export default function ScheduleTrainingView({ day }: props) {
         keyboardType="numeric"
       />
 
-      <Button
-        title="Dodaj ćwiczenie"
-        // onPress={() => calculateBMI(height, weight)}
+      <Button title="Dodaj ćwiczenie" onPress={addWorkout} />
+
+      <Text style={styles.header}>Twoje ćwiczenia:</Text>
+      <FlatList
+        style={styles.flatList}
+        data={workouts}
+        keyExtractor={(result, index) => index.toString()}
+        ListHeaderComponent={
+          <View style={styles.headerItem}>
+            <Text style={styles.headerText}>Ćwiczenie</Text>
+            <Text style={styles.headerText}>Powtórzenia</Text>
+            <Text style={styles.headerText}>Akcje</Text>
+          </View>
+        }
+        renderItem={({ item, index }) => (
+          <View style={styles.resultItem}>
+            <Text style={styles.workoutName}>{item.workout}</Text>
+            <Text style={styles.reps}>{item.reps}</Text>
+            <TouchableOpacity>
+              <Text style={styles.deleteButton}>Usuń</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       />
     </View>
   );
@@ -124,5 +145,40 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
+  },
+  flatList: {
+    width: "100%",
+  },
+  workoutName: {
+    width: "33%",
+  },
+  headerItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 32,
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
+  },
+  headerText: {
+    fontSize: 16,
+    padding: 12,
+    fontWeight: "bold",
+  },
+  resultItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 32,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
+  },
+  reps: {
+    paddingRight: 12,
+  },
+  deleteButton: {
+    fontWeight: "bold",
+    color: "red",
+    paddingHorizontal: 18,
   },
 });
