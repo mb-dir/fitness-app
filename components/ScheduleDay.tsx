@@ -88,12 +88,11 @@ export default function ScheduleTrainingView({ day }: props) {
         onChangeText={text => setWorkout(text)}
       />
 
-      <Text style={styles.label}>Ilość powtórzeń:</Text>
+      <Text style={styles.label}>Serie/powtórzenia:</Text>
       <TextInput
         style={styles.input}
         value={reps}
         onChangeText={text => setReps(text)}
-        keyboardType="numeric"
       />
 
       <Button title="Dodaj ćwiczenie" onPress={addWorkout} />
@@ -106,7 +105,7 @@ export default function ScheduleTrainingView({ day }: props) {
         ListHeaderComponent={
           <View style={styles.headerItem}>
             <Text style={styles.headerText}>Ćwiczenie</Text>
-            <Text style={styles.headerText}>Powtórzenia</Text>
+            <Text style={styles.headerText}>Serie/powtórzenia</Text>
             <Text style={styles.headerText}>Akcje</Text>
           </View>
         }
