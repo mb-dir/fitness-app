@@ -55,6 +55,10 @@ export default function ScheduleTrainingView({ day }: props) {
   };
 
   const addWorkout = async () => {
+    if (!workout || !reps) {
+      Alert.alert("Błąd", "Musisz wprowadzić wszystkie dane");
+      return;
+    }
     const newWorkout = { workout, reps };
     try {
       const existingWorkouts = await AsyncStorage.getItem(day);
