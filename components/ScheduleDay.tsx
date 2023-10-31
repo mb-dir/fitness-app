@@ -74,6 +74,24 @@ export default function ScheduleTrainingView({ day }: props) {
     }
   };
 
+  const deleteWorkout = async (index: number) => {
+    try {
+      const existingWorkouts = await AsyncStorage.getItem(day);
+      if (existingWorkouts) {
+        const parsedWorkouts = JSON.parse(existingWorkouts);
+        parsedWorkouts.splice(index, 1);
+        setWorkouts(parsedWorkouts);
+        await AsyncStorage.setItem(day, JSON.stringify(parsedWorkouts));
+      }
+    } catch (error) {
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
+    }
+  };
+
   useEffect(() => {
     getWorkouts();
   }, [isFocused]);
@@ -113,7 +131,7 @@ export default function ScheduleTrainingView({ day }: props) {
           <View style={styles.resultItem}>
             <Text style={styles.workoutName}>{item.workout}</Text>
             <Text style={styles.reps}>{item.reps}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => deleteWorkout(index)}>
               <Text style={styles.deleteButton}>Usuń</Text>
             </TouchableOpacity>
           </View>
@@ -178,6 +196,5 @@ const styles = StyleSheet.create({
   deleteButton: {
     fontWeight: "bold",
     color: "red",
-    paddingHorizontal: 18,
   },
 });
