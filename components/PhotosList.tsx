@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
   },
   photosList: {
     width: "100%",
+    padding: 5,
   },
   imageWrapper: {
     width: "30%",
@@ -133,6 +134,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-around",
+    alignItems: "center",
+    height: 50,
   },
   closeButton: {
     fontSize: 18,

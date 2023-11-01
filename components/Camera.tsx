@@ -42,13 +42,13 @@ export default function App() {
     }
   }, [isFocused]);
 
-  if (hasCameraPermission === undefined) {
-    return <Text>Requesting permissions...</Text>;
-  } else if (!hasCameraPermission) {
+  const toggleCameraType = () => {
+    setCameraType(cameraType === 0 ? 1 : 0);
+  };
+
+  if (!hasCameraPermission) {
     return (
-      <Text>
-        Permission for camera not granted. Please change this in settings.
-      </Text>
+      <Text>Brak odpowiednich dostępów. Zmień ustawienia dostępu aparatu.</Text>
     );
   }
 
@@ -127,9 +127,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  buttonContainer: {
-    backgroundColor: "#fff",
+  buttonsContainer: {
+    height: 100,
     alignSelf: "flex-end",
+    justifyContent: "space-around",
+  },
+  actionButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    padding: 10,
   },
   preview: {
     alignSelf: "stretch",
