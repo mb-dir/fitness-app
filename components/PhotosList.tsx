@@ -35,12 +35,12 @@ export default function PhotosList() {
     <View style={styles.container}>
       {savedPhotos.length > 0 && (
         <FlatList
+          style={styles.photosList}
           data={savedPhotos}
           keyExtractor={item => item.uri}
+          numColumns={3}
           renderItem={({ item }) => (
-            <View style={styles.imageContainer}>
-              <Image source={item} style={styles.image} />
-            </View>
+            <Image source={item} style={styles.image} />
           )}
         />
       )}
@@ -56,11 +56,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  imageContainer: {
-    margin: 10,
+  photosList: {
+    width: "100%",
   },
   image: {
-    width: 200,
-    height: 200,
+    width: "30%",
+    aspectRatio: 1,
+    margin: 6,
   },
 });
