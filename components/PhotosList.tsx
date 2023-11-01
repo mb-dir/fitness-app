@@ -36,6 +36,25 @@ export default function PhotosList() {
     }
   };
 
+  const showDate = (photo: any) => {
+    // xDXDXdxDXDXDXDXDXDXddxdxDXDX - best solution ever, FYI to create unique photo name I have used date, so now I get the date from photo name and display itXD
+    const regex = /_(.*?)\./;
+    const match = photo.uri.match(regex);
+    if (match && match[1]) {
+      const dateInSec = match[1];
+      const photoDate = new Date(+dateInSec);
+      const day = photoDate.getDate();
+      const month = photoDate.getMonth() + 1;
+      const year = photoDate.getFullYear();
+
+      const date = `${day}/${month}/${year}`;
+
+      return date;
+    } else {
+      return "";
+    }
+  };
+
   const openPhotoDetail = (photoUri: string) => {
     setSelectedPhotoUri(photoUri);
   };
@@ -70,6 +89,7 @@ export default function PhotosList() {
               onPress={() => openPhotoDetail(item.uri)}
             >
               <Image source={item} style={styles.image} />
+              <Text style={styles.date}>{showDate(item)}</Text>
             </TouchableOpacity>
           )}
         />
@@ -125,6 +145,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "black",
+  },
+  date: {
+    textAlign: "center",
   },
   modalImage: {
     width: "100%",
