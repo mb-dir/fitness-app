@@ -11,14 +11,17 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 
+import { useIsFocused } from "@react-navigation/native";
+
 export default function PhotosList() {
   const [savedPhotos, setSavedPhotos] = useState<any[]>([]);
   const [selectedPhotoUri, setSelectedPhotoUri] = useState<string | null>(null);
   const isModalVisible = selectedPhotoUri !== null;
 
+  const isFocused = useIsFocused();
   useEffect(() => {
     loadSavedPhotos();
-  }, []);
+  }, [isFocused]);
 
   const loadSavedPhotos = async () => {
     try {
@@ -39,6 +42,18 @@ export default function PhotosList() {
 
   const closePhotoDetail = () => {
     setSelectedPhotoUri(null);
+  };
+
+  const deletePhoto = async () => {
+    try {
+      if (selectedPhotoUri) {
+        await FileSystem.deleteAsync(selectedPhotoUri);
+        loadSavedPhotos();
+        closePhotoDetail();
+      }
+    } catch (error) {
+      console.error("Error deleting photo:", error);
+    }
   };
 
   return (
@@ -73,9 +88,14 @@ export default function PhotosList() {
             source={{ uri: selectedPhotoUri || "" }}
             style={styles.modalImage}
           />
-          <TouchableOpacity onPress={closePhotoDetail}>
-            <Text style={styles.closeButton}>Zamknij</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={deletePhoto}>
+              <Text style={styles.deleteButton}>Usuń</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={closePhotoDetail}>
+              <Text style={styles.closeButton}>Zamknij</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View>
@@ -109,10 +129,19 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "90%",
   },
+  buttonContainer: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-around",
+  },
   closeButton: {
     fontSize: 18,
     fontWeight: "bold",
     color: "white",
-    marginTop: 20,
+  },
+  deleteButton: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "red",
   },
 });
