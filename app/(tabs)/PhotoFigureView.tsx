@@ -1,27 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import Camera from "../../components/Camera";
+import PhotosList from "../../components/PhotosList";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 export default function PhotoFigureView() {
+  const Tab = createMaterialTopTabNavigator();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>PhotoFigureView</Text>
-      <View style={styles.separator} />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Twoja sylwetka" component={PhotosList} />
+      <Tab.Screen name="Dodaj zdjęcie" component={Camera} />
+    </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
