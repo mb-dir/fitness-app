@@ -12,11 +12,10 @@ import {
 import { CameraCapturedPicture, Camera as CameraComponent } from "expo-camera";
 import { useEffect, useRef, useState } from "react";
 
-import { StatusBar } from "expo-status-bar";
 import { shareAsync } from "expo-sharing";
 import { useIsFocused } from "@react-navigation/native";
 
-export default function App() {
+export default function Camera() {
   let cameraRef = useRef<any>();
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] =
@@ -24,6 +23,7 @@ export default function App() {
   const [photo, setPhoto] = useState<CameraCapturedPicture | undefined>(
     undefined
   );
+  const [cameraType, setCameraType] = useState(0);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -102,21 +102,23 @@ export default function App() {
           style={styles.preview}
           source={{ uri: "data:image/jpg;base64," + photo.base64 }}
         />
-        <Button title="Share" onPress={sharePic} />
-        {hasMediaLibraryPermission ? (
-          <Button title="Save" onPress={savePhoto} />
-        ) : undefined}
-        <Button title="Discard" onPress={() => setPhoto(undefined)} />
+        <View style={styles.actionButtonsContainer}>
+          {hasMediaLibraryPermission ? (
+            <Button title="Zapisz" onPress={savePhoto} />
+          ) : undefined}
+          <Button title="Udostępnij" onPress={sharePic} />
+          <Button title="Usuń" onPress={() => setPhoto(undefined)} />
+        </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <CameraComponent style={styles.container} ref={cameraRef}>
-      <View style={styles.buttonContainer}>
-        <Button title="Take Pic" onPress={takePic} />
+    <CameraComponent style={styles.container} ref={cameraRef} type={cameraType}>
+      <View style={styles.buttonsContainer}>
+        <Button title="Zrób zdjęcie" onPress={takePic} />
+        <Button title="Zmień kamerę" onPress={toggleCameraType} />
       </View>
-      <StatusBar style="auto" />
     </CameraComponent>
   );
 }
