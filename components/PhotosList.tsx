@@ -1,6 +1,7 @@
 import * as FileSystem from "expo-file-system";
 
 import {
+  Alert,
   FlatList,
   Image,
   Modal,
@@ -13,12 +14,16 @@ import { useEffect, useState } from "react";
 
 import { useIsFocused } from "@react-navigation/native";
 
+type img = {
+  uri: string;
+};
+
 export default function PhotosList() {
-  const [savedPhotos, setSavedPhotos] = useState<any[]>([]);
+  const [savedPhotos, setSavedPhotos] = useState<img[]>([]);
   const [selectedPhotoUri, setSelectedPhotoUri] = useState<string | null>(null);
   const isModalVisible = selectedPhotoUri !== null;
-
   const isFocused = useIsFocused();
+
   useEffect(() => {
     loadSavedPhotos();
   }, [isFocused]);
@@ -32,7 +37,11 @@ export default function PhotosList() {
       }));
       setSavedPhotos(imageUris);
     } catch (error) {
-      console.error("Error loading saved photos:", error);
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
     }
   };
 
@@ -47,7 +56,8 @@ export default function PhotosList() {
       const month = photoDate.getMonth() + 1;
       const year = photoDate.getFullYear();
 
-      const date = `${day}/${month}/${year}`;
+      const date =
+        day < 10 ? `0${day}/${month}/${year}` : `${day}/${month}/${year}`;
 
       return date;
     } else {
@@ -71,7 +81,11 @@ export default function PhotosList() {
         closePhotoDetail();
       }
     } catch (error) {
-      console.error("Error deleting photo:", error);
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
     }
   };
 

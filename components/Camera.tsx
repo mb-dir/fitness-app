@@ -2,6 +2,7 @@ import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 
 import {
+  Alert,
   Button,
   Image,
   SafeAreaView,
@@ -9,21 +10,25 @@ import {
   Text,
   View,
 } from "react-native";
-import { CameraCapturedPicture, Camera as CameraComponent } from "expo-camera";
+import {
+  CameraCapturedPicture,
+  Camera as CameraComponent,
+  CameraPictureOptions,
+} from "expo-camera";
 import { useEffect, useRef, useState } from "react";
 
 import { shareAsync } from "expo-sharing";
 import { useIsFocused } from "@react-navigation/native";
 
+type cameraType = 1 | 0;
+
 export default function Camera() {
-  let cameraRef = useRef<any>();
+  const cameraRef = useRef<CameraComponent>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] =
     useState(false);
-  const [photo, setPhoto] = useState<CameraCapturedPicture | undefined>(
-    undefined
-  );
-  const [cameraType, setCameraType] = useState(0);
+  const [photo, setPhoto] = useState<CameraCapturedPicture | null>(null);
+  const [cameraType, setCameraType] = useState<cameraType>(0);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -52,46 +57,45 @@ export default function Camera() {
     );
   }
 
-  let takePic = async () => {
-    let options = {
+  const takePhoto = async () => {
+    const options: CameraPictureOptions = {
       quality: 1,
       base64: true,
       exif: false,
     };
 
-    let newPhoto = await cameraRef?.current?.takePictureAsync(options);
+    const newPhoto: CameraCapturedPicture | null =
+      (await cameraRef.current?.takePictureAsync(options)) || null;
     setPhoto(newPhoto);
   };
 
   if (photo) {
-    let sharePic = () => {
+    const sharePhoto = () => {
       shareAsync(photo.uri).then(() => {
-        setPhoto(undefined);
+        setPhoto(null);
       });
     };
 
-    let savePhoto = async () => {
+    const savePhoto = async () => {
       if (photo) {
         try {
-          // Create a directory to store photos if it doesn't exist
           const directory = `${FileSystem.documentDirectory}photos/`;
           await FileSystem.makeDirectoryAsync(directory, {
             intermediates: true,
           });
-
-          // Generate a unique file name for each saved photo
           const fileName = `photo_${new Date().getTime()}.jpg`;
           const fileUri = `${directory}${fileName}`;
-
-          // Save the photo to the local file system
           await FileSystem.writeAsStringAsync(fileUri, photo.base64 || "", {
             encoding: FileSystem.EncodingType.Base64,
           });
 
-          // Clear the current photo
-          setPhoto(undefined);
+          setPhoto(null);
         } catch (error) {
-          console.error("Error saving photo:", error);
+          Alert.alert(
+            "Błąd",
+            "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+            [{ text: "OK" }]
+          );
         }
       }
     };
@@ -106,8 +110,8 @@ export default function Camera() {
           {hasMediaLibraryPermission ? (
             <Button title="Zapisz" onPress={savePhoto} />
           ) : undefined}
-          <Button title="Udostępnij" onPress={sharePic} />
-          <Button title="Usuń" onPress={() => setPhoto(undefined)} />
+          <Button title="Udostępnij" onPress={sharePhoto} />
+          <Button title="Usuń" onPress={() => setPhoto(null)} />
         </View>
       </SafeAreaView>
     );
@@ -116,7 +120,7 @@ export default function Camera() {
   return (
     <CameraComponent style={styles.container} ref={cameraRef} type={cameraType}>
       <View style={styles.buttonsContainer}>
-        <Button title="Zrób zdjęcie" onPress={takePic} />
+        <Button title="Zrób zdjęcie" onPress={takePhoto} />
         <Button title="Zmień kamerę" onPress={toggleCameraType} />
       </View>
     </CameraComponent>

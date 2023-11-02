@@ -47,6 +47,18 @@ export default function BMISavedResults() {
     }
   };
 
+  const formatDate = (date: string) => {
+    const parts = date.split("/");
+    const day = +parts[0];
+    const month = +parts[1];
+    const year = +parts[2];
+
+    const formattedDay = day < 10 ? `0${day}` : `${day}`;
+    const formattedDateString = `${formattedDay}/${month}/${year}`;
+
+    return formattedDateString;
+  };
+
   return (
     <FlatList
       data={results}
@@ -60,7 +72,7 @@ export default function BMISavedResults() {
       }
       renderItem={({ item, index }) => (
         <View style={styles.resultItem}>
-          <Text>{item.date}</Text>
+          <Text>{formatDate(item.date)}</Text>
           <Text style={styles.value}>{item.result}</Text>
           <TouchableOpacity onPress={() => deleteResult(index)}>
             <Text style={styles.deleteButton}>Usuń</Text>
