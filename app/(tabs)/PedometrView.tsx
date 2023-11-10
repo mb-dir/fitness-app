@@ -1,27 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import Pedometr from "../../components/Pedometr";
+import PedometrSettings from "../../components/PedometrSettings";
+import React from "react";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 export default function PedometrView() {
+  const Tab = createMaterialTopTabNavigator();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>PedometrView</Text>
-      <View style={styles.separator} />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Krokomierz" component={Pedometr} />
+      <Tab.Screen name="Ustawienia" component={PedometrSettings} />
+    </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
