@@ -11,10 +11,8 @@ export default function CurrentKCAL() {
   const isFocused = useIsFocused();
 
   function calculateTotalAmount(meal: Meal): number {
-    // Use reduce to sum up the amounts of all components
     const totalAmount = meal.components.reduce((sum, component) => {
-      // Convert the amount to a number and add it to the sum
-      const componentAmount = parseFloat(component.amount);
+      const componentAmount = component.kcal;
       return isNaN(componentAmount) ? sum : sum + componentAmount;
     }, 0);
 
@@ -22,12 +20,8 @@ export default function CurrentKCAL() {
   }
 
   function calculateTotalAmountForMeals(meals: Meal[]): number {
-    // Use reduce to iterate through all meals and sum up their total amounts
     const totalAmountForAllMeals = meals.reduce((total, meal) => {
-      // Calculate the total amount for each meal using the previously defined function
       const mealTotalAmount = calculateTotalAmount(meal);
-
-      // Add the meal's total amount to the overall total
       return total + mealTotalAmount;
     }, 0);
 
@@ -37,7 +31,7 @@ export default function CurrentKCAL() {
   const todayMeals = meals.filter(meal => {
     const mealDate = new Date(
       meal.timestamp.year,
-      meal.timestamp.month - 1, // JavaScript months are 0-indexed
+      meal.timestamp.month - 1,
       meal.timestamp.day
     );
     const today = new Date();
@@ -80,7 +74,7 @@ export default function CurrentKCAL() {
       <View style={styles.header}>
         <Text style={styles.headerText}>Twoje dzisiejsze kalorie:</Text>
         <Text style={styles.headerText}>
-          {calculateTotalAmountForMeals(meals)}/{savedKcalLimit}
+          {calculateTotalAmountForMeals(todayMeals)}/{savedKcalLimit}
         </Text>
       </View>
       <FlatList
@@ -96,7 +90,7 @@ export default function CurrentKCAL() {
                   style={styles.componentItem}
                 >
                   <Text>
-                    {component.name} - {component.amount}g
+                    {component.name} - {component.amount}g({component.kcal}kcal)
                   </Text>
                 </View>
               ))}

@@ -11,6 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import RNPickerSelect from "react-native-picker-select";
 import { useIsFocused } from "@react-navigation/native";
 
 export interface Meal {
@@ -27,24 +28,74 @@ export interface Meal {
 interface MealComponent {
   name: string;
   amount: string;
+  kcal: number;
 }
+const availableComponents = [
+  { label: "Ryż (10kcal/g)", value: "Ryż", kcalPerG: 10 },
+  { label: "Ziemniaki (8kcal/g)", value: "Ziemniaki", kcalPerG: 8 },
+  { label: "Jajka (14kcal/g)", value: "Jajka", kcalPerG: 14 },
+  { label: "Kurczak (16.5kcal/g)", value: "Kurczak", kcalPerG: 16.5 },
+  { label: "Wołowina (25kcal/g)", value: "Wołowina", kcalPerG: 25 },
+  { label: "Tuńczyk (14.4kcal/g)", value: "Tuńczyk", kcalPerG: 14.4 },
+  { label: "Łosoś (20.6kcal/g)", value: "Łosoś", kcalPerG: 20.6 },
+  {
+    label: "Oliwa z oliwek (88.4kcal/g)",
+    value: "Oliwa z oliwek",
+    kcalPerG: 88.4,
+  },
+  { label: "Awokado (16kcal/g)", value: "Awokado", kcalPerG: 16 },
+  { label: "Brokuły (5.5kcal/g)", value: "Brokuły", kcalPerG: 5.5 },
+  { label: "Marchewki (4.1kcal/g)", value: "Marchewki", kcalPerG: 4.1 },
+  { label: "Cukinia (1.7kcal/g)", value: "Cukinia", kcalPerG: 1.7 },
+  { label: "Czosnek (14.9kcal/g)", value: "Czosnek", kcalPerG: 14.9 },
+  { label: "Cebula (4kcal/g)", value: "Cebula", kcalPerG: 4 },
+  {
+    label: "Czerwona papryka (3.1kcal/g)",
+    value: "Czerwona papryka",
+    kcalPerG: 3.1,
+  },
+  { label: "Brokuły (5.5kcal/g)", value: "Brokuły", kcalPerG: 5.5 },
+  { label: "Szpinak (2.3kcal/g)", value: "Szpinak", kcalPerG: 2.3 },
+  {
+    label: "Jogurt naturalny (5.9kcal/g)",
+    value: "Jogurt naturalny",
+    kcalPerG: 5.9,
+  },
+  { label: "Mleko (6.1kcal/g)", value: "Mleko", kcalPerG: 6.1 },
+  { label: "Ser feta (26.4kcal/g)", value: "Ser feta", kcalPerG: 26.4 },
+];
 
 export default function AddKCAL() {
   const [mealName, setMealName] = useState("");
-  const [componentName, setComponentName] = useState("");
+  const [selectedComponent, setSelectedComponent] = useState("");
   const [componentAmount, setComponentAmount] = useState("");
   const [mealComponents, setMealComponents] = useState<MealComponent[]>([]);
   const [meals, setMeals] = useState<Meal[]>([]);
   const isFocused = useIsFocused();
 
   const addComponent = () => {
-    if (componentName && componentAmount) {
-      setMealComponents(prev => [
-        ...prev,
-        { name: componentName, amount: componentAmount },
-      ]);
-      setComponentName("");
-      setComponentAmount("");
+    if (selectedComponent && componentAmount) {
+      const selectedComponentInfo = availableComponents.find(
+        component => component.value === selectedComponent
+      );
+
+      if (selectedComponentInfo) {
+        const kcal =
+          parseFloat(componentAmount) * selectedComponentInfo.kcalPerG;
+
+        setMealComponents(prev => [
+          ...prev,
+          {
+            name: selectedComponent,
+            amount: componentAmount,
+            kcal: kcal,
+          },
+        ]);
+        setComponentAmount("");
+        setSelectedComponent("");
+      } else {
+        Alert.alert("Błąd", "Nieprawidłowy składnik", [{ text: "OK" }]);
+      }
     } else {
       Alert.alert("Błąd", "Uzupełnij dane", [{ text: "OK" }]);
     }
@@ -67,11 +118,10 @@ export default function AddKCAL() {
 
         setMeals(prev => [...prev, meal]);
 
-        // Save the updated array of meals to AsyncStorage
         await AsyncStorage.setItem("meals", JSON.stringify([...meals, meal]));
         setMealName("");
         setComponentAmount("");
-        setComponentName("");
+        setSelectedComponent("");
         setMealComponents([]);
         Alert.alert("Informacja", "Posiłek został dodany", [{ text: "OK" }]);
       } else {
@@ -113,13 +163,12 @@ export default function AddKCAL() {
             value={mealName}
             onChangeText={text => setMealName(text)}
           />
-          <Text style={styles.label}>Składnik</Text>
-          <TextInput
-            style={styles.input}
-            value={componentName}
-            onChangeText={text => setComponentName(text)}
+          <Text style={styles.label}>Wybierz składnik</Text>
+          <RNPickerSelect
+            items={availableComponents}
+            onValueChange={value => setSelectedComponent(value)}
+            value={selectedComponent}
           />
-
           <Text style={styles.label}>Ilość(gramy)</Text>
           <TextInput
             style={styles.input}
@@ -156,14 +205,12 @@ export default function AddKCAL() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center",
     padding: 10,
   },
   flexContainer: {
-    width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
+    marginBottom: 50,
   },
   flexChild: {
     width: "45%",
@@ -172,9 +219,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 5,
     fontSize: 18,
-  },
-  form: {
-    marginTop: -50,
   },
   label: {
     fontSize: 18,
