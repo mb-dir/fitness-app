@@ -1,27 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import AddKCAL from "../../components/AddKCAL";
+import CurrentKCAL from "../../components/CurrentKCAL";
+import KCALHistory from "../../components/KCALHistory";
+import KCALSettings from "../../components/KCALSettings";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 export default function CalorieCalculatorView() {
+  const Tab = createMaterialTopTabNavigator();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>CalorieCalculatorView</Text>
-      <View style={styles.separator} />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Dodaj posiłek" component={AddKCAL} />
+      <Tab.Screen name="Dziś" component={CurrentKCAL} />
+      <Tab.Screen name="Historia" component={KCALHistory} />
+      <Tab.Screen name="Ustawienia" component={KCALSettings} />
+    </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
