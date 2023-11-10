@@ -1,9 +1,156 @@
-import { StyleSheet, Text } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 
-import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Meal } from "./AddKCAL";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function KCALHistory() {
-  return <Text>KCAL History</Text>;
+  const [meals, setMeals] = useState<Meal[]>([]);
+  const isFocused = useIsFocused();
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  const historyMeals = meals.filter(meal => {
+    const mealDate = new Date(
+      meal.timestamp.year,
+      meal.timestamp.month - 1,
+      meal.timestamp.day
+    );
+    const now = new Date();
+    return (
+      mealDate.getDate() !== now.getDate() ||
+      mealDate.getMonth() !== now.getMonth() ||
+      mealDate.getFullYear() !== now.getFullYear()
+    );
+  });
+
+  useEffect(() => {
+    const loadMeals = async () => {
+      try {
+        const storedMeals = await AsyncStorage.getItem("meals");
+        if (storedMeals) {
+          const parsedMeals: Meal[] = JSON.parse(storedMeals);
+          setMeals(parsedMeals);
+        }
+      } catch (error) {
+        console.error("Error loading meals:", error);
+      }
+    };
+    loadMeals();
+  }, [isFocused]);
+
+  const groupedMeals = groupMealsByDate(historyMeals);
+
+  const handleDatePress = (date: string) => {
+    setSelectedDate(selectedDate === date ? null : date);
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Historia posiłków:</Text>
+      </View>
+      <FlatList
+        data={groupedMeals}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.dateContainer}>
+            <TouchableOpacity onPress={() => handleDatePress(item.date)}>
+              <Text style={styles.dateText}>{item.date}</Text>
+            </TouchableOpacity>
+            {selectedDate === item.date && (
+              <View>
+                {item.meals.map((meal, index) => (
+                  <View
+                    key={`${index}${meal.name}${item.date}`}
+                    style={styles.mealContainer}
+                  >
+                    <Text style={styles.mealName}>{meal.name}</Text>
+                    <View style={styles.componentContainer}>
+                      {meal.components.map((component, index) => (
+                        <View
+                          key={`${index}${component.name}${meal.name}`}
+                          style={styles.componentItem}
+                        >
+                          <Text>
+                            {component.name} - {component.amount}g(
+                            {component.kcal}
+                            kcal)
+                          </Text>
+                        </View>
+                      ))}
+                    </View>
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+        )}
+      />
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({});
+// Function to group meals by date
+const groupMealsByDate = (meals: Meal[]): { date: string; meals: Meal[] }[] => {
+  const groupedMeals: { [date: string]: Meal[] } = {};
+
+  meals.forEach(meal => {
+    const mealDate = `${meal.timestamp.day}/${meal.timestamp.month}/${meal.timestamp.year}`;
+    if (!groupedMeals[mealDate]) {
+      groupedMeals[mealDate] = [];
+    }
+    groupedMeals[mealDate].push(meal);
+  });
+
+  return Object.entries(groupedMeals).map(([date, meals]) => ({
+    date,
+    meals,
+  }));
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  dateContainer: {
+    marginBottom: 20,
+  },
+  dateText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textDecorationLine: "underline",
+  },
+  mealContainer: {
+    marginBottom: 10,
+  },
+  mealName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  componentContainer: {
+    flexDirection: "column",
+  },
+  componentItem: {
+    flexDirection: "row",
+    marginBottom: 5,
+  },
+});
