@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   FlatList,
   StyleSheet,
@@ -12,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 
-interface Meal {
+export interface Meal {
   name: string;
   components: MealComponent[];
   timestamp: {
@@ -29,7 +30,6 @@ interface MealComponent {
 }
 
 export default function AddKCAL() {
-  const [savedKcalLimit, setSavedKcalLimit] = useState("");
   const [mealName, setMealName] = useState("");
   const [componentName, setComponentName] = useState("");
   const [componentAmount, setComponentAmount] = useState("");
@@ -37,25 +37,16 @@ export default function AddKCAL() {
   const [meals, setMeals] = useState<Meal[]>([]);
   const isFocused = useIsFocused();
 
-  const loadKcalLimit = async () => {
-    try {
-      const storedKcalLimit = await AsyncStorage.getItem("kcalLimit");
-      if (storedKcalLimit !== null) {
-        setSavedKcalLimit(storedKcalLimit);
-      }
-    } catch (error) {
-      console.error("Error loading kcal limit:", error);
-    }
-  };
-
   const addComponent = () => {
     if (componentName && componentAmount) {
-      setMealComponents([
-        ...mealComponents,
+      setMealComponents(prev => [
+        ...prev,
         { name: componentName, amount: componentAmount },
       ]);
       setComponentName("");
       setComponentAmount("");
+    } else {
+      Alert.alert("Błąd", "Uzupełnij dane", [{ text: "OK" }]);
     }
   };
 
@@ -74,26 +65,20 @@ export default function AddKCAL() {
           },
         };
 
-        // Save the meal in the array of meals
-        setMeals([...meals, meal]);
+        setMeals(prev => [...prev, meal]);
 
         // Save the updated array of meals to AsyncStorage
-        await AsyncStorage.setItem("meals", JSON.stringify(meals));
+        await AsyncStorage.setItem("meals", JSON.stringify([...meals, meal]));
+        setMealName("");
+        setComponentAmount("");
+        setComponentName("");
+        setMealComponents([]);
+        Alert.alert("Informacja", "Posiłek został dodany", [{ text: "OK" }]);
+      } else {
+        Alert.alert("Błąd", "Uzupełnij dane", [{ text: "OK" }]);
       }
     } catch (error) {
       console.error("Error saving meal:", error);
-    }
-  };
-
-  const loadMeals = async () => {
-    try {
-      const storedMeals = await AsyncStorage.getItem("meals");
-      if (storedMeals) {
-        const parsedMeals: Meal[] = JSON.parse(storedMeals);
-        setMeals(parsedMeals);
-      }
-    } catch (error) {
-      console.error("Error loading meals:", error);
     }
   };
 
@@ -104,7 +89,17 @@ export default function AddKCAL() {
   };
 
   useEffect(() => {
-    loadKcalLimit();
+    const loadMeals = async () => {
+      try {
+        const storedMeals = await AsyncStorage.getItem("meals");
+        if (storedMeals) {
+          const parsedMeals: Meal[] = JSON.parse(storedMeals);
+          setMeals(parsedMeals);
+        }
+      } catch (error) {
+        console.error("Error loading meals:", error);
+      }
+    };
     loadMeals();
   }, [isFocused]);
 
