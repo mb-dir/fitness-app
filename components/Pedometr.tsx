@@ -12,17 +12,6 @@ export default function StepCounter() {
   const [savedStepGoal, setSavedStepGoal] = useState(0);
   const isFocused = useIsFocused();
 
-  const getStepGoal = async () => {
-    try {
-      const storedStepGoal = await AsyncStorage.getItem("stepGoal");
-      if (storedStepGoal !== null) {
-        setSavedStepGoal(+storedStepGoal);
-      }
-    } catch (error) {
-      console.error("Error getting step goal:", error);
-    }
-  };
-
   useEffect(() => {
     let isMounted = true;
 
@@ -45,51 +34,43 @@ export default function StepCounter() {
   }, [isTracking]);
 
   useEffect(() => {
+    const getStepGoal = async () => {
+      try {
+        const storedStepGoal = await AsyncStorage.getItem("stepGoal");
+        if (storedStepGoal !== null) {
+          setSavedStepGoal(+storedStepGoal);
+        }
+      } catch (error) {
+        console.error("Error getting step goal:", error);
+      }
+    };
+
+    const loadStepCountFromStorage = async () => {
+      try {
+        const storedStepCount = await AsyncStorage.getItem("stepCount");
+        if (storedStepCount !== null) {
+          setStepCount(+storedStepCount);
+        }
+      } catch (error) {
+        console.error("Error loading step count:", error);
+      }
+    };
+
+    loadStepCountFromStorage();
     getStepGoal();
   }, [isFocused]);
 
   useEffect(() => {
-    const saveDailyStepCount = async () => {
-      try {
-        // Get the current date in the format "DD.MM.YYYY"
-        const currentDate = new Date().toLocaleDateString("en-GB");
-
-        // Load existing steps history from AsyncStorage
-        const stepsHistoryString = await AsyncStorage.getItem("stepsHistory");
-        const stepsHistory = stepsHistoryString
-          ? JSON.parse(stepsHistoryString)
-          : [];
-
-        // Add today's step count to the history
-        stepsHistory.push({ date: currentDate, result: stepCount });
-
-        // Save updated steps history to AsyncStorage
-        await AsyncStorage.setItem(
-          "stepsHistory",
-          JSON.stringify(stepsHistory)
-        );
-
-        // Reset stepCount to 0
-        setStepCount(0);
-      } catch (error) {
-        console.error("Error saving daily step count:", error);
-      }
-    };
-
-    // Set up a timeout to trigger the saveDailyStepCount function at 00:00 every day
-    const now = new Date();
-    const midnight = new Date(now);
-    midnight.setHours(24, 0, 0, 0);
-
-    const timeUntilMidnight = midnight.getTime() - now.getTime();
-
-    const timeoutId = setTimeout(() => {
-      saveDailyStepCount();
-    }, timeUntilMidnight);
-
     return () => {
-      // Clear the timeout when the component is unmounted or updated
-      clearTimeout(timeoutId);
+      const saveStepCountToStorage = async () => {
+        try {
+          await AsyncStorage.setItem("stepCount", stepCount.toString());
+        } catch (error) {
+          console.error("Error saving step count:", error);
+        }
+      };
+
+      saveStepCountToStorage();
     };
   }, [stepCount]);
 
@@ -110,6 +91,20 @@ export default function StepCounter() {
     setIsTracking(prevTracking => !prevTracking);
   };
 
+  const resetStepCount = async () => {
+    if (!isTracking) {
+      try {
+        await AsyncStorage.setItem("stepCount", "0");
+        const storedStepCount = await AsyncStorage.getItem("stepCount");
+        if (storedStepCount !== null) {
+          setStepCount(+storedStepCount);
+        }
+      } catch (error) {
+        console.error("Error resetting step count in AsyncStorage:", error);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.counterText}>
@@ -127,6 +122,16 @@ export default function StepCounter() {
           {isTracking ? "Wyłącz" : "Włącz"}
         </Text>
       </TouchableOpacity>
+
+      {!isTracking && (
+        <TouchableOpacity
+          style={styles.resetButton}
+          onPress={resetStepCount}
+          disabled={isTracking}
+        >
+          <Text style={styles.resetButtonText}>Resetuj Kroki</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -154,6 +159,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#e74c3c",
   },
   toggleButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  resetButton: {
+    marginTop: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    backgroundColor: "#3498db",
+  },
+  resetButtonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
