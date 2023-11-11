@@ -48,6 +48,51 @@ export default function StepCounter() {
     getStepGoal();
   }, [isFocused]);
 
+  useEffect(() => {
+    const saveDailyStepCount = async () => {
+      try {
+        // Get the current date in the format "DD.MM.YYYY"
+        const currentDate = new Date().toLocaleDateString("en-GB");
+
+        // Load existing steps history from AsyncStorage
+        const stepsHistoryString = await AsyncStorage.getItem("stepsHistory");
+        const stepsHistory = stepsHistoryString
+          ? JSON.parse(stepsHistoryString)
+          : [];
+
+        // Add today's step count to the history
+        stepsHistory.push({ date: currentDate, result: stepCount });
+
+        // Save updated steps history to AsyncStorage
+        await AsyncStorage.setItem(
+          "stepsHistory",
+          JSON.stringify(stepsHistory)
+        );
+
+        // Reset stepCount to 0
+        setStepCount(0);
+      } catch (error) {
+        console.error("Error saving daily step count:", error);
+      }
+    };
+
+    // Set up a timeout to trigger the saveDailyStepCount function at 00:00 every day
+    const now = new Date();
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0);
+
+    const timeUntilMidnight = midnight.getTime() - now.getTime();
+
+    const timeoutId = setTimeout(() => {
+      saveDailyStepCount();
+    }, timeUntilMidnight);
+
+    return () => {
+      // Clear the timeout when the component is unmounted or updated
+      clearTimeout(timeoutId);
+    };
+  }, [stepCount]);
+
   const detectSteps = (data: { x: number; y: number; z: number }) => {
     const { x, y, z } = data;
     const currentAcceleration = Math.sqrt(x ** 2 + y ** 2 + z ** 2);
