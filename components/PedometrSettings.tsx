@@ -43,7 +43,7 @@ export default function PedometrSettings() {
         onChangeText={text => setStepGoal(text)}
         keyboardType="numeric"
       />
-      <Button title="Save Step Goal" onPress={saveStepGoal} />
+      <Button title="Zapisz cel" onPress={saveStepGoal} />
       {savedStepGoal !== null && (
         <View style={styles.savedGoalContainer}>
           <Text style={styles.savedGoalText}>

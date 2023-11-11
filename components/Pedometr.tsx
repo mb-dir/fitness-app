@@ -67,13 +67,19 @@ export default function StepCounter() {
 
   return (
     <View style={styles.container}>
-      <Text>
+      <Text style={styles.counterText}>
         Kroki: {stepCount}/{savedStepGoal}
       </Text>
 
-      <TouchableOpacity style={styles.toggleButton} onPress={toggleTracking}>
+      <TouchableOpacity
+        style={[
+          styles.toggleButton,
+          isTracking ? styles.stopButton : styles.startButton,
+        ]}
+        onPress={toggleTracking}
+      >
         <Text style={styles.toggleButtonText}>
-          {isTracking ? "Wyłącz" : "włącz"}
+          {isTracking ? "Wyłącz" : "Włącz"}
         </Text>
       </TouchableOpacity>
     </View>
@@ -86,16 +92,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  text: {
-    fontSize: 18,
+  counterText: {
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 20,
   },
   toggleButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: "#3498db",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 5,
+  },
+  startButton: {
+    backgroundColor: "#27ae60",
+  },
+  stopButton: {
+    backgroundColor: "#e74c3c",
   },
   toggleButtonText: {
     color: "white",
