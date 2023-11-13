@@ -24,6 +24,11 @@ export default function BMISavedResults() {
           setResults(JSON.parse(savedResults));
         }
       } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
         console.error("Error fetching saved results: ", error);
       }
     };
@@ -44,6 +49,7 @@ export default function BMISavedResults() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      console.error(error);
     }
   };
 

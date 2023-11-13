@@ -1,4 +1,5 @@
 import {
+  Alert,
   FlatList,
   StyleSheet,
   Text,
@@ -39,6 +40,11 @@ export default function KCALHistory() {
           setMeals(parsedMeals);
         }
       } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
         console.error("Error loading meals:", error);
       }
     };

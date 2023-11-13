@@ -1,9 +1,11 @@
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { Accelerometer } from "expo-sensors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
+
+type coordinates = { x: number; y: number; z: number };
 
 export default function StepCounter() {
   const [stepCount, setStepCount] = useState(0);
@@ -42,6 +44,11 @@ export default function StepCounter() {
         }
       } catch (error) {
         console.error("Error getting step goal:", error);
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
       }
     };
 
@@ -53,6 +60,11 @@ export default function StepCounter() {
         }
       } catch (error) {
         console.error("Error loading step count:", error);
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
       }
     };
 
@@ -67,6 +79,11 @@ export default function StepCounter() {
           await AsyncStorage.setItem("stepCount", stepCount.toString());
         } catch (error) {
           console.error("Error saving step count:", error);
+          Alert.alert(
+            "Błąd",
+            "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+            [{ text: "OK" }]
+          );
         }
       };
 
@@ -74,7 +91,7 @@ export default function StepCounter() {
     };
   }, [stepCount]);
 
-  const detectSteps = (data: { x: number; y: number; z: number }) => {
+  const detectSteps = (data: coordinates) => {
     const { x, y, z } = data;
     const currentAcceleration = Math.sqrt(x ** 2 + y ** 2 + z ** 2);
     if (
@@ -100,6 +117,11 @@ export default function StepCounter() {
           setStepCount(+storedStepCount);
         }
       } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
         console.error("Error resetting step count in AsyncStorage:", error);
       }
     }

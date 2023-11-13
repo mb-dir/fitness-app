@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -6,15 +6,20 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function PedometrSettings() {
   const [stepGoal, setStepGoal] = useState("");
-  const [savedStepGoal, setSavedStepGoal] = useState<any>(null);
+  const [savedStepGoal, setSavedStepGoal] = useState<string | null>(null);
   const isFocused = useIsFocused();
 
   const saveStepGoal = async () => {
     try {
-      await AsyncStorage.setItem("stepGoal", stepGoal.toString());
-      setSavedStepGoal(+stepGoal);
+      await AsyncStorage.setItem("stepGoal", stepGoal);
+      setSavedStepGoal(stepGoal);
       setStepGoal("");
     } catch (error) {
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
       console.error("Error saving step goal:", error);
     }
   };
@@ -23,9 +28,14 @@ export default function PedometrSettings() {
     try {
       const goal = await AsyncStorage.getItem("stepGoal");
       if (goal) {
-        setSavedStepGoal(parseInt(goal));
+        setSavedStepGoal(goal);
       }
     } catch (error) {
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
       console.error("Error loading step goal:", error);
     }
   };

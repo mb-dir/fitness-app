@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import RNPickerSelect from "react-native-picker-select";
 import { useIsFocused } from "@react-navigation/native";
 
-export interface Meal {
+export type Meal = {
   name: string;
   components: MealComponent[];
   timestamp: {
@@ -23,14 +23,21 @@ export interface Meal {
     year: number;
     hour: number;
   };
-}
+};
 
-interface MealComponent {
+type MealComponent = {
   name: string;
   amount: string;
   kcal: number;
-}
-const availableComponents = [
+};
+
+type availableComponent = {
+  label: string;
+  value: string;
+  kcalPerG: number;
+};
+
+const availableComponents: availableComponent[] = [
   { label: "Ryż (0.5kcal/g)", value: "Ryż", kcalPerG: 0.5 },
   { label: "Ziemniaki (0.4kcal/g)", value: "Ziemniaki", kcalPerG: 0.4 },
   { label: "Jajka (0.3kcal/g)", value: "Jajka", kcalPerG: 0.3 },
@@ -128,6 +135,11 @@ export default function AddKCAL() {
         Alert.alert("Błąd", "Uzupełnij dane", [{ text: "OK" }]);
       }
     } catch (error) {
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
       console.error("Error saving meal:", error);
     }
   };
@@ -147,6 +159,11 @@ export default function AddKCAL() {
           setMeals(parsedMeals);
         }
       } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
         console.error("Error loading meals:", error);
       }
     };

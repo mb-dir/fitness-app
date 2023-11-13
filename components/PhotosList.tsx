@@ -42,10 +42,11 @@ export default function PhotosList() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      console.error(error);
     }
   };
 
-  const showDate = (photo: any) => {
+  const showDate = (photo: img) => {
     // xDXDXdxDXDXDXDXDXDXddxdxDXDX - best solution ever, FYI to create unique photo name I have used date, so now I get the date from photo name and display itXD
     const regex = /_(.*?)\./;
     const match = photo.uri.match(regex);
@@ -86,6 +87,7 @@ export default function PhotosList() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      console.error(error);
     }
   };
 
