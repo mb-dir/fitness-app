@@ -6,13 +6,13 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function PedometrSettings() {
   const [stepGoal, setStepGoal] = useState("");
-  const [savedStepGoal, setSavedStepGoal] = useState<any>(null);
+  const [savedStepGoal, setSavedStepGoal] = useState<string | null>(null);
   const isFocused = useIsFocused();
 
   const saveStepGoal = async () => {
     try {
-      await AsyncStorage.setItem("stepGoal", stepGoal.toString());
-      setSavedStepGoal(+stepGoal);
+      await AsyncStorage.setItem("stepGoal", stepGoal);
+      setSavedStepGoal(stepGoal);
       setStepGoal("");
     } catch (error) {
       console.error("Error saving step goal:", error);
@@ -23,7 +23,7 @@ export default function PedometrSettings() {
     try {
       const goal = await AsyncStorage.getItem("stepGoal");
       if (goal) {
-        setSavedStepGoal(parseInt(goal));
+        setSavedStepGoal(goal);
       }
     } catch (error) {
       console.error("Error loading step goal:", error);

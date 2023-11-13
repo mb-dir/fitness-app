@@ -5,6 +5,8 @@ import { Accelerometer } from "expo-sensors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 
+type coordinates = { x: number; y: number; z: number };
+
 export default function StepCounter() {
   const [stepCount, setStepCount] = useState(0);
   const prevAccelerationRef = useRef(0);
@@ -74,7 +76,7 @@ export default function StepCounter() {
     };
   }, [stepCount]);
 
-  const detectSteps = (data: { x: number; y: number; z: number }) => {
+  const detectSteps = (data: coordinates) => {
     const { x, y, z } = data;
     const currentAcceleration = Math.sqrt(x ** 2 + y ** 2 + z ** 2);
     if (
