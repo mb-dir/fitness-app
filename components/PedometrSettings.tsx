@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,6 +15,11 @@ export default function PedometrSettings() {
       setSavedStepGoal(stepGoal);
       setStepGoal("");
     } catch (error) {
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
       console.error("Error saving step goal:", error);
     }
   };
@@ -26,6 +31,11 @@ export default function PedometrSettings() {
         setSavedStepGoal(goal);
       }
     } catch (error) {
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
       console.error("Error loading step goal:", error);
     }
   };

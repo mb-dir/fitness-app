@@ -1,5 +1,5 @@
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { Accelerometer } from "expo-sensors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -44,6 +44,11 @@ export default function StepCounter() {
         }
       } catch (error) {
         console.error("Error getting step goal:", error);
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
       }
     };
 
@@ -55,6 +60,11 @@ export default function StepCounter() {
         }
       } catch (error) {
         console.error("Error loading step count:", error);
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
       }
     };
 
@@ -69,6 +79,11 @@ export default function StepCounter() {
           await AsyncStorage.setItem("stepCount", stepCount.toString());
         } catch (error) {
           console.error("Error saving step count:", error);
+          Alert.alert(
+            "Błąd",
+            "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+            [{ text: "OK" }]
+          );
         }
       };
 
@@ -102,6 +117,11 @@ export default function StepCounter() {
           setStepCount(+storedStepCount);
         }
       } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
         console.error("Error resetting step count in AsyncStorage:", error);
       }
     }

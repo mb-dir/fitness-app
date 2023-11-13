@@ -25,6 +25,7 @@ export default function KCALSettings() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      console.error(error);
     }
   };
 
@@ -36,6 +37,11 @@ export default function KCALSettings() {
       }
     } catch (error) {
       console.error("Error loading kcal limit:", error);
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
     }
   };
 

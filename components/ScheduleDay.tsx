@@ -56,6 +56,7 @@ export default function ScheduleTrainingView({ day }: props) {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      console.error(error);
     }
   };
 
@@ -82,6 +83,7 @@ export default function ScheduleTrainingView({ day }: props) {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      console.error(error);
     }
   };
 
@@ -100,6 +102,7 @@ export default function ScheduleTrainingView({ day }: props) {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      console.error(error);
     }
   };
 

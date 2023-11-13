@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -52,6 +52,11 @@ export default function CurrentKCAL() {
           setMeals(parsedMeals);
         }
       } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
         console.error("Error loading meals:", error);
       }
     };
@@ -62,6 +67,11 @@ export default function CurrentKCAL() {
           setSavedKcalLimit(storedKcalLimit);
         }
       } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
         console.error("Error loading kcal limit:", error);
       }
     };

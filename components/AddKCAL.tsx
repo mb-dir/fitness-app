@@ -135,6 +135,11 @@ export default function AddKCAL() {
         Alert.alert("Błąd", "Uzupełnij dane", [{ text: "OK" }]);
       }
     } catch (error) {
+      Alert.alert(
+        "Błąd",
+        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+        [{ text: "OK" }]
+      );
       console.error("Error saving meal:", error);
     }
   };
@@ -154,6 +159,11 @@ export default function AddKCAL() {
           setMeals(parsedMeals);
         }
       } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
         console.error("Error loading meals:", error);
       }
     };

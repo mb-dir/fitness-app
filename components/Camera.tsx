@@ -96,6 +96,7 @@ export default function Camera() {
             "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
             [{ text: "OK" }]
           );
+          console.error(error);
         }
       }
     };

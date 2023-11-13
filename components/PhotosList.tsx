@@ -42,6 +42,7 @@ export default function PhotosList() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      console.error(error);
     }
   };
 
@@ -86,6 +87,7 @@ export default function PhotosList() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      console.error(error);
     }
   };
 
