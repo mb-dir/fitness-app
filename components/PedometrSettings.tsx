@@ -10,6 +10,10 @@ export default function PedometrSettings() {
   const isFocused = useIsFocused();
 
   const saveStepGoal = async () => {
+    if (!stepGoal) {
+      Alert.alert("Błąd", "Uzupełnij dane");
+      return;
+    }
     try {
       await AsyncStorage.setItem("stepGoal", stepGoal);
       setSavedStepGoal(stepGoal);
