@@ -51,6 +51,10 @@ export default function BMICalculator() {
       results.push(resultObj);
 
       await AsyncStorage.setItem("bmiResults", JSON.stringify(results));
+
+      setHeight("");
+      setWeight("");
+      setBMI(null);
       Alert.alert("Informacja", "Twój wynik został zapisany", [{ text: "OK" }]);
     } catch (error) {
       Alert.alert(
