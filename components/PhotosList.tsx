@@ -32,9 +32,15 @@ export default function PhotosList() {
     try {
       const directory = `${FileSystem.documentDirectory}photos/`;
       const photosDirectory = await FileSystem.readDirectoryAsync(directory);
+
       const imageUris = photosDirectory.map(fileName => ({
         uri: `${directory}${fileName}`,
+        date: extractDateFromFileName(fileName),
       }));
+
+      // Sort the array of photos based on the date in descending order
+      imageUris.sort((a, b) => b.date - a.date);
+
       setSavedPhotos(imageUris);
     } catch (error) {
       Alert.alert(
@@ -44,6 +50,15 @@ export default function PhotosList() {
       );
       console.error(error);
     }
+  };
+
+  const extractDateFromFileName = (fileName: string): number => {
+    const regex = /_(.*?)\./;
+    const match = fileName.match(regex);
+    if (match && match[1]) {
+      return +match[1];
+    }
+    return 0;
   };
 
   const showDate = (photo: img) => {
