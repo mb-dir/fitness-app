@@ -126,6 +126,9 @@ export default function StepCounter() {
       <Text style={styles.counterText}>
         Kroki: {stepCount}/{savedStepGoal}
       </Text>
+      <Text style={styles.textSmall}>
+        Spaliłeś około {Math.round(stepCount * 0.05)} kcal
+      </Text>
 
       <TouchableOpacity
         style={[
@@ -161,6 +164,10 @@ const styles = StyleSheet.create({
   counterText: {
     fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 20,
+  },
+  textSmall: {
+    fontSize: 16,
     marginBottom: 20,
   },
   toggleButton: {
