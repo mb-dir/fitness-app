@@ -111,11 +111,8 @@ export default function StepCounter() {
   const resetStepCount = async () => {
     if (!isTracking) {
       try {
+        setStepCount(0);
         await AsyncStorage.setItem("stepCount", "0");
-        const storedStepCount = await AsyncStorage.getItem("stepCount");
-        if (storedStepCount !== null) {
-          setStepCount(+storedStepCount);
-        }
       } catch (error) {
         Alert.alert(
           "Błąd",
