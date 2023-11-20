@@ -73,22 +73,20 @@ export default function StepCounter() {
   }, [isFocused]);
 
   useEffect(() => {
-    return () => {
-      const saveStepCountToStorage = async () => {
-        try {
-          await AsyncStorage.setItem("stepCount", stepCount.toString());
-        } catch (error) {
-          console.error("Error saving step count:", error);
-          Alert.alert(
-            "Błąd",
-            "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
-            [{ text: "OK" }]
-          );
-        }
-      };
-
-      saveStepCountToStorage();
+    const saveStepCountToStorage = async () => {
+      try {
+        await AsyncStorage.setItem("stepCount", stepCount.toString());
+      } catch (error) {
+        console.error("Error saving step count:", error);
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
+      }
     };
+
+    saveStepCountToStorage();
   }, [stepCount]);
 
   const detectSteps = (data: coordinates) => {
@@ -112,7 +110,6 @@ export default function StepCounter() {
     if (!isTracking) {
       try {
         setStepCount(0);
-        await AsyncStorage.setItem("stepCount", "0");
       } catch (error) {
         Alert.alert(
           "Błąd",
