@@ -28,23 +28,22 @@ export default function PedometrSettings() {
     }
   };
 
-  const loadStepGoal = async () => {
-    try {
-      const goal = await AsyncStorage.getItem("stepGoal");
-      if (goal) {
-        setSavedStepGoal(goal);
-      }
-    } catch (error) {
-      Alert.alert(
-        "Błąd",
-        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
-        [{ text: "OK" }]
-      );
-      console.error("Error loading step goal:", error);
-    }
-  };
-
   useEffect(() => {
+    const loadStepGoal = async () => {
+      try {
+        const goal = await AsyncStorage.getItem("stepGoal");
+        if (goal) {
+          setSavedStepGoal(goal);
+        }
+      } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
+        console.error("Error loading step goal:", error);
+      }
+    };
     loadStepGoal();
   }, [isFocused]);
 
