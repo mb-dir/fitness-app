@@ -10,7 +10,7 @@ type coordinates = { x: number; y: number; z: number };
 export default function StepCounter() {
   const [stepCount, setStepCount] = useState(0);
   const prevAccelerationRef = useRef(0);
-  const [isTracking, setIsTracking] = useState(true);
+  const [isTracking, setIsTracking] = useState(false);
   const [savedStepGoal, setSavedStepGoal] = useState(0);
   const isFocused = useIsFocused();
 
