@@ -59,9 +59,7 @@ export default function KCALHistory() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Historia posiłków:</Text>
-      </View>
+      <Text style={styles.headerText}>Historia posiłków:</Text>
       <FlatList
         data={groupedMeals}
         keyExtractor={(item, index) => index.toString()}
@@ -126,14 +124,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
   headerText: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "bold",
+    marginTop: 15,
+    marginBottom: 35,
+    textAlign: "center",
   },
   dateContainer: {
     marginBottom: 20,
@@ -141,11 +137,14 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 10,
-    textDecorationLine: "underline",
+    marginBottom: 5,
+    padding: 5,
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
   },
   mealContainer: {
     marginBottom: 10,
+    paddingHorizontal: 15,
   },
   mealName: {
     fontSize: 16,
