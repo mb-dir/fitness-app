@@ -113,10 +113,12 @@ const groupMealsByDate = (meals: Meal[]): { date: string; meals: Meal[] }[] => {
     groupedMeals[mealDate].push(meal);
   });
 
-  return Object.entries(groupedMeals).map(([date, meals]) => ({
-    date,
-    meals,
-  }));
+  return Object.entries(groupedMeals)
+    .map(([date, meals]) => ({
+      date,
+      meals,
+    }))
+    .reverse();
 };
 
 const styles = StyleSheet.create({
