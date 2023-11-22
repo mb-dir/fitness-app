@@ -52,12 +52,6 @@ export default function KCALSettings() {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.text}>Obecnie ustawiony limit kalorii:</Text>
-        <Text style={styles.text}>
-          {savedKcalLimit ? `${savedKcalLimit} KCAL` : "Brak"}
-        </Text>
-      </View>
-      <View style={styles.form}>
         <Text style={styles.label}>Podaj limit kalorii</Text>
         <TextInput
           keyboardType="numeric"
@@ -67,6 +61,13 @@ export default function KCALSettings() {
         />
         <Button title="Zapisz" onPress={saveKcalLimit} />
       </View>
+
+      <View>
+        <Text style={styles.text}>Obecnie ustawiony limit kalorii:</Text>
+        <Text style={styles.text}>
+          {savedKcalLimit ? `${savedKcalLimit} KCAL` : "Brak"}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -74,26 +75,19 @@ export default function KCALSettings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-evenly",
     alignItems: "center",
-    padding: 10,
   },
   text: {
-    textAlign: "center",
     marginTop: 5,
     fontSize: 18,
-  },
-  form: {
-    marginTop: -50,
+    textAlign: "center",
   },
   label: {
     fontSize: 18,
-    marginBottom: 10,
-    textAlign: "center",
+    marginVertical: 10,
   },
   input: {
-    width: 200,
-    height: 40,
+    height: 30,
     borderColor: "gray",
     borderWidth: 1,
     marginBottom: 10,

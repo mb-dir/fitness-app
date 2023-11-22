@@ -71,17 +71,19 @@ export default function PedometrSettings() {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    alignItems: "center",
   },
   label: {
     fontSize: 18,
     marginBottom: 8,
   },
   input: {
-    height: 40,
+    width: "50%",
+    height: 30,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
   savedGoalContainer: {
     marginTop: 20,

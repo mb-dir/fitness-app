@@ -124,11 +124,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    width: 200,
-    height: 40,
+    width: "50%",
+    height: 30,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 20,
+    marginBottom: 10,
     paddingHorizontal: 10,
   },
   result: {

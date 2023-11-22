@@ -163,18 +163,18 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     fontWeight: "bold",
-    marginVertical: 20,
+    marginVertical: 15,
   },
   label: {
     fontSize: 18,
     marginBottom: 10,
   },
   input: {
-    width: 200,
-    height: 40,
+    width: "50%",
+    height: 30,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 20,
+    marginBottom: 10,
     paddingHorizontal: 10,
   },
   flatList: {
