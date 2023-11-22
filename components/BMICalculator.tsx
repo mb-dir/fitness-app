@@ -51,6 +51,10 @@ export default function BMICalculator() {
       results.push(resultObj);
 
       await AsyncStorage.setItem("bmiResults", JSON.stringify(results));
+
+      setHeight("");
+      setWeight("");
+      setBMI(null);
       Alert.alert("Informacja", "Twój wynik został zapisany", [{ text: "OK" }]);
     } catch (error) {
       Alert.alert(
@@ -111,7 +115,6 @@ export default function BMICalculator() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     padding: 10,
   },
@@ -120,11 +123,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    width: 200,
-    height: 40,
+    width: "50%",
+    height: 30,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 20,
+    marginBottom: 10,
     paddingHorizontal: 10,
   },
   result: {

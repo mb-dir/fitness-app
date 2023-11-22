@@ -10,6 +10,10 @@ export default function PedometrSettings() {
   const isFocused = useIsFocused();
 
   const saveStepGoal = async () => {
+    if (!stepGoal) {
+      Alert.alert("Błąd", "Uzupełnij dane");
+      return;
+    }
     try {
       await AsyncStorage.setItem("stepGoal", stepGoal);
       setSavedStepGoal(stepGoal);
@@ -24,23 +28,22 @@ export default function PedometrSettings() {
     }
   };
 
-  const loadStepGoal = async () => {
-    try {
-      const goal = await AsyncStorage.getItem("stepGoal");
-      if (goal) {
-        setSavedStepGoal(goal);
-      }
-    } catch (error) {
-      Alert.alert(
-        "Błąd",
-        "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
-        [{ text: "OK" }]
-      );
-      console.error("Error loading step goal:", error);
-    }
-  };
-
   useEffect(() => {
+    const loadStepGoal = async () => {
+      try {
+        const goal = await AsyncStorage.getItem("stepGoal");
+        if (goal) {
+          setSavedStepGoal(goal);
+        }
+      } catch (error) {
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
+        console.error("Error loading step goal:", error);
+      }
+    };
     loadStepGoal();
   }, [isFocused]);
 
@@ -68,17 +71,19 @@ export default function PedometrSettings() {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    alignItems: "center",
   },
   label: {
     fontSize: 18,
     marginBottom: 8,
   },
   input: {
-    height: 40,
+    width: "50%",
+    height: 30,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
   savedGoalContainer: {
     marginTop: 20,

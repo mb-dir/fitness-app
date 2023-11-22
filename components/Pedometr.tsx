@@ -10,7 +10,7 @@ type coordinates = { x: number; y: number; z: number };
 export default function StepCounter() {
   const [stepCount, setStepCount] = useState(0);
   const prevAccelerationRef = useRef(0);
-  const [isTracking, setIsTracking] = useState(true);
+  const [isTracking, setIsTracking] = useState(false);
   const [savedStepGoal, setSavedStepGoal] = useState(0);
   const isFocused = useIsFocused();
 
@@ -73,22 +73,20 @@ export default function StepCounter() {
   }, [isFocused]);
 
   useEffect(() => {
-    return () => {
-      const saveStepCountToStorage = async () => {
-        try {
-          await AsyncStorage.setItem("stepCount", stepCount.toString());
-        } catch (error) {
-          console.error("Error saving step count:", error);
-          Alert.alert(
-            "Błąd",
-            "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
-            [{ text: "OK" }]
-          );
-        }
-      };
-
-      saveStepCountToStorage();
+    const saveStepCountToStorage = async () => {
+      try {
+        await AsyncStorage.setItem("stepCount", stepCount.toString());
+      } catch (error) {
+        console.error("Error saving step count:", error);
+        Alert.alert(
+          "Błąd",
+          "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
+          [{ text: "OK" }]
+        );
+      }
     };
+
+    saveStepCountToStorage();
   }, [stepCount]);
 
   const detectSteps = (data: coordinates) => {
@@ -111,11 +109,7 @@ export default function StepCounter() {
   const resetStepCount = async () => {
     if (!isTracking) {
       try {
-        await AsyncStorage.setItem("stepCount", "0");
-        const storedStepCount = await AsyncStorage.getItem("stepCount");
-        if (storedStepCount !== null) {
-          setStepCount(+storedStepCount);
-        }
+        setStepCount(0);
       } catch (error) {
         Alert.alert(
           "Błąd",
@@ -131,6 +125,9 @@ export default function StepCounter() {
     <View style={styles.container}>
       <Text style={styles.counterText}>
         Kroki: {stepCount}/{savedStepGoal}
+      </Text>
+      <Text style={styles.textSmall}>
+        Spaliłeś około {Math.round(stepCount * 0.05)} kcal
       </Text>
 
       <TouchableOpacity
@@ -167,6 +164,10 @@ const styles = StyleSheet.create({
   counterText: {
     fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 20,
+  },
+  textSmall: {
+    fontSize: 16,
     marginBottom: 20,
   },
   toggleButton: {

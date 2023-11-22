@@ -5,6 +5,7 @@ import {
   Alert,
   Button,
   Image,
+  Linking,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -37,6 +38,7 @@ export default function Camera() {
         await CameraComponent.requestCameraPermissionsAsync();
       const mediaLibraryPermission =
         await MediaLibrary.requestPermissionsAsync();
+
       setHasCameraPermission(cameraPermission.status === "granted");
       setHasMediaLibraryPermission(mediaLibraryPermission.status === "granted");
     })();
@@ -51,9 +53,17 @@ export default function Camera() {
     setCameraType(cameraType === 0 ? 1 : 0);
   };
 
+  const openAppSettings = () => {
+    Linking.openSettings();
+  };
+
   if (!hasCameraPermission) {
     return (
-      <Text>Brak odpowiednich dostępów. Zmień ustawienia dostępu aparatu.</Text>
+      <View style={styles.container}>
+        <Text>Brak odpowiednich dostępów.</Text>
+        <Text style={styles.text}>Zmień ustawienia dostępu aparatu.</Text>
+        <Button title="Otwórz ustawienia" onPress={openAppSettings} />
+      </View>
     );
   }
 
@@ -133,6 +143,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  text: {
+    paddingBottom: 10,
   },
   buttonsContainer: {
     height: 100,
