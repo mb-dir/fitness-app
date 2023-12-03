@@ -8,34 +8,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Meal, MealComponent, availableComponent } from "../../types";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RNPickerSelect from "react-native-picker-select";
 import { useIsFocused } from "@react-navigation/native";
-
-export type Meal = {
-  name: string;
-  components: MealComponent[];
-  timestamp: {
-    day: number;
-    month: number;
-    year: number;
-    hour: number;
-  };
-};
-
-type MealComponent = {
-  name: string;
-  amount: string;
-  kcal: number;
-};
-
-type availableComponent = {
-  label: string;
-  value: string;
-  kcalPerG: number;
-};
 
 const availableComponents: availableComponent[] = [
   { label: "Ryż (0.5kcal/g)", value: "Ryż", kcalPerG: 0.5 },

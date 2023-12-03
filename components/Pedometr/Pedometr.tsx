@@ -3,9 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Accelerometer } from "expo-sensors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { coordinates } from "../../types";
 import { useIsFocused } from "@react-navigation/native";
-
-type coordinates = { x: number; y: number; z: number };
 
 export default function StepCounter() {
   const [stepCount, setStepCount] = useState(0);

@@ -12,11 +12,8 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 
+import { img } from "../../types";
 import { useIsFocused } from "@react-navigation/native";
-
-type img = {
-  uri: string;
-};
 
 export default function PhotosList() {
   const [savedPhotos, setSavedPhotos] = useState<img[]>([]);

@@ -2,7 +2,7 @@ import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Meal } from "./AddKCAL";
+import { Meal } from "../../types";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function CurrentKCAL() {

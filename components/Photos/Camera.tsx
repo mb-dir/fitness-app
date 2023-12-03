@@ -18,10 +18,9 @@ import {
 } from "expo-camera";
 import { useEffect, useRef, useState } from "react";
 
+import { cameraType } from "../../types";
 import { shareAsync } from "expo-sharing";
 import { useIsFocused } from "@react-navigation/native";
-
-type cameraType = 1 | 0;
 
 export default function Camera() {
   const cameraRef = useRef<CameraComponent>(null);
