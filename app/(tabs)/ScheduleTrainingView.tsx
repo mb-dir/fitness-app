@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
-
 import { DAY_OF_WEEK } from "../../components/ScheduleDay";
 import { JSX } from "react";
 import ScheduleDay from "../../components/ScheduleDay";
+import { StyleSheet } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 export default function ScheduleTrainingView() {

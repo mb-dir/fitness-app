@@ -1,7 +1,7 @@
-import AddKCAL from "../../components/AddKCAL";
-import CurrentKCAL from "../../components/CurrentKCAL";
-import KCALHistory from "../../components/KCALHistory";
-import KCALSettings from "../../components/KCALSettings";
+import AddKCAL from "../../components/KCAL/AddKCAL";
+import CurrentKCAL from "../../components/KCAL/CurrentKCAL";
+import KCALHistory from "../../components/KCAL/KCALHistory";
+import KCALSettings from "../../components/KCAL/KCALSettings";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 export default function CalorieCalculatorView() {

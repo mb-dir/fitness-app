@@ -1,5 +1,5 @@
-import BMICalculator from "../../components/BMICalculator";
-import BMISavedResults from "../../components/BMISavedResults";
+import BMICalculator from "../../components/BMI/BMICalculator";
+import BMISavedResults from "../../components/BMI/BMISavedResults";
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
