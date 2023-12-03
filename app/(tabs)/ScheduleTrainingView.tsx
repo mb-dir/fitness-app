@@ -1,4 +1,4 @@
-import { DAY_OF_WEEK } from "../../components/ScheduleDay";
+import { DAY_OF_WEEK } from "../../constants/Enums";
 import { JSX } from "react";
 import ScheduleDay from "../../components/ScheduleDay";
 import { StyleSheet } from "react-native";

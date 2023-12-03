@@ -12,18 +12,9 @@ import {
 import { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { DAY_OF_WEEK } from "../constants/Enums";
 import { useIsFocused } from "@react-navigation/native";
 import { workout } from "../types";
-
-export enum DAY_OF_WEEK {
-  Sunday = "Niedziela",
-  Monday = "Poniedziałek",
-  Tuesday = "Wtorek",
-  Wednesday = "Środa",
-  Thursday = "Czwartek",
-  Friday = "Piątek",
-  Saturday = "Sobota",
-}
 
 type props = {
   day: DAY_OF_WEEK;
