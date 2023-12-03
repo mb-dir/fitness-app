@@ -10,23 +10,23 @@ export default function CurrentKCAL() {
   const [savedKcalLimit, setSavedKcalLimit] = useState("");
   const isFocused = useIsFocused();
 
-  function calculateTotalAmount(meal: Meal): number {
+  const calculateTotalAmount = (meal: Meal): number => {
     const totalAmount = meal.components.reduce((sum, component) => {
       const componentAmount = component.kcal;
       return isNaN(componentAmount) ? sum : sum + componentAmount;
     }, 0);
 
     return totalAmount;
-  }
+  };
 
-  function calculateTotalAmountForMeals(meals: Meal[]): number {
+  const calculateTotalAmountForMeals = (meals: Meal[]): number => {
     const totalAmountForAllMeals = meals.reduce((total, meal) => {
       const mealTotalAmount = calculateTotalAmount(meal);
       return total + mealTotalAmount;
     }, 0);
 
     return totalAmountForAllMeals;
-  }
+  };
 
   const todayMeals = meals.filter(meal => {
     const mealDate = new Date(

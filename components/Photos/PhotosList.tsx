@@ -38,7 +38,6 @@ export default function PhotosList() {
         date: extractDateFromFileName(fileName),
       }));
 
-      // Sort the array of photos based on the date in descending order
       imageUris.sort((a, b) => b.date - a.date);
 
       setSavedPhotos(imageUris);
