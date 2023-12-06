@@ -1,4 +1,12 @@
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Button,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -16,6 +24,7 @@ export default function KCALSettings() {
           { text: "OK" },
         ]);
         setKcalLimit("");
+        Keyboard.dismiss();
       } else {
         Alert.alert("Debilem jesteś", "Ale cymbał xdXd", [{ text: "OK" }]);
       }

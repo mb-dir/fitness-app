@@ -2,6 +2,7 @@ import {
   Alert,
   Button,
   FlatList,
+  Keyboard,
   StyleSheet,
   Text,
   TextInput,
@@ -75,6 +76,7 @@ export default function AddKCAL() {
         setSelectedComponent("");
         setMealComponents([]);
         Alert.alert("Informacja", "Posiłek został dodany", [{ text: "OK" }]);
+        Keyboard.dismiss();
       } else {
         Alert.alert("Błąd", "Uzupełnij dane", [{ text: "OK" }]);
       }

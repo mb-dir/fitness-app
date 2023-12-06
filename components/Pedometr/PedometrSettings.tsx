@@ -1,4 +1,12 @@
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Button,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,6 +26,8 @@ export default function PedometrSettings() {
       await AsyncStorage.setItem("stepGoal", stepGoal);
       setSavedStepGoal(stepGoal);
       setStepGoal("");
+      Keyboard.dismiss();
+      Alert.alert("Informacja", "Cel kroków został zapisany", [{ text: "OK" }]);
     } catch (error) {
       Alert.alert(
         "Błąd",
@@ -53,7 +63,9 @@ export default function PedometrSettings() {
       <TextInput
         style={styles.input}
         value={stepGoal}
-        onChangeText={text => setStepGoal(text)}
+        onChangeText={text => {
+          setStepGoal(text);
+        }}
         keyboardType="numeric"
       />
       <Button title="Zapisz cel" onPress={saveStepGoal} />
