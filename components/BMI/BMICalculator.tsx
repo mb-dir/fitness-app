@@ -13,8 +13,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { bmiResult } from "../../types";
 
 export default function BMICalculator() {
-  const [height, setHeight] = useState<string>("");
-  const [weight, setWeight] = useState<string>("");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
   const [bmi, setBMI] = useState<number | null>(null);
 
   const calculateBMI = (height: string, weight: string) => {
