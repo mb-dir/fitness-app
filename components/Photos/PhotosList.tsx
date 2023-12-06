@@ -12,11 +12,8 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 
+import { img } from "../../types";
 import { useIsFocused } from "@react-navigation/native";
-
-type img = {
-  uri: string;
-};
 
 export default function PhotosList() {
   const [savedPhotos, setSavedPhotos] = useState<img[]>([]);
@@ -38,7 +35,6 @@ export default function PhotosList() {
         date: extractDateFromFileName(fileName),
       }));
 
-      // Sort the array of photos based on the date in descending order
       imageUris.sort((a, b) => b.date - a.date);
 
       setSavedPhotos(imageUris);

@@ -1,6 +1,4 @@
-import { Platform, StyleSheet, Text, View } from "react-native";
-
-import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function InfoModal() {
   return (
@@ -19,9 +17,6 @@ export default function InfoModal() {
       <Text style={styles.listItem}>BMI między 25 a 29,9 - nadwaga.</Text>
       <Text style={styles.listItem}>BMI 30 i wyżej - otyłość.</Text>
       <View style={styles.separator} />
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );
 }

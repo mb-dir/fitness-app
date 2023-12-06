@@ -12,25 +12,12 @@ import {
 import { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { DAY_OF_WEEK } from "../constants/Enums";
 import { useIsFocused } from "@react-navigation/native";
-
-export enum DAY_OF_WEEK {
-  Sunday = "Niedziela",
-  Monday = "Poniedziałek",
-  Tuesday = "Wtorek",
-  Wednesday = "Środa",
-  Thursday = "Czwartek",
-  Friday = "Piątek",
-  Saturday = "Sobota",
-}
+import { workout } from "../types";
 
 type props = {
   day: DAY_OF_WEEK;
-};
-
-type workout = {
-  workout: string;
-  reps: string;
 };
 
 export default function ScheduleTrainingView({ day }: props) {

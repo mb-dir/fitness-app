@@ -2,7 +2,7 @@ import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Meal } from "./AddKCAL";
+import { Meal } from "../../types";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function CurrentKCAL() {
@@ -10,23 +10,23 @@ export default function CurrentKCAL() {
   const [savedKcalLimit, setSavedKcalLimit] = useState("");
   const isFocused = useIsFocused();
 
-  function calculateTotalAmount(meal: Meal): number {
+  const calculateTotalAmount = (meal: Meal): number => {
     const totalAmount = meal.components.reduce((sum, component) => {
       const componentAmount = component.kcal;
       return isNaN(componentAmount) ? sum : sum + componentAmount;
     }, 0);
 
     return totalAmount;
-  }
+  };
 
-  function calculateTotalAmountForMeals(meals: Meal[]): number {
+  const calculateTotalAmountForMeals = (meals: Meal[]): number => {
     const totalAmountForAllMeals = meals.reduce((total, meal) => {
       const mealTotalAmount = calculateTotalAmount(meal);
       return total + mealTotalAmount;
     }, 0);
 
     return totalAmountForAllMeals;
-  }
+  };
 
   const todayMeals = meals.filter(meal => {
     const mealDate = new Date(

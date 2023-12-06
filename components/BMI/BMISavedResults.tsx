@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { bmiResult } from "./BMICalculator";
+import { bmiResult } from "../../types";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function BMISavedResults() {

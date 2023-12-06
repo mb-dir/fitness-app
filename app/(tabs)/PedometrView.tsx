@@ -1,5 +1,5 @@
-import Pedometr from "../../components/Pedometr";
-import PedometrSettings from "../../components/PedometrSettings";
+import Pedometr from "../../components/Pedometr/Pedometr";
+import PedometrSettings from "../../components/Pedometr/PedometrSettings";
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
