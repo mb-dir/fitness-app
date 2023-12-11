@@ -19,7 +19,9 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function AddKCAL() {
   const [mealName, setMealName] = useState("");
-  const [selectedComponent, setSelectedComponent] = useState("");
+  const [selectedComponent, setSelectedComponent] = useState(
+    availableComponents[0].value
+  );
   const [componentAmount, setComponentAmount] = useState("");
   const [mealComponents, setMealComponents] = useState<MealComponent[]>([]);
   const [meals, setMeals] = useState<Meal[]>([]);
