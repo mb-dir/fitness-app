@@ -102,7 +102,7 @@ export default function CurrentKCAL() {
                 >
                   <Text>
                     {component.name} - {component.amount}g (
-                    {component.kcal.toFixed(2)}kcal)
+                    {component.kcal.toFixed(0)}kcal)
                   </Text>
                 </View>
               ))}
