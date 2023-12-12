@@ -88,7 +88,7 @@ export default function Camera() {
     const savePhoto = async () => {
       if (photo) {
         try {
-          const directory = `${FileSystem.documentDirectory}photos/`;
+          const directory = `${FileSystem.documentDirectory}fa-photos/`;
           await FileSystem.makeDirectoryAsync(directory, {
             intermediates: true,
           });
