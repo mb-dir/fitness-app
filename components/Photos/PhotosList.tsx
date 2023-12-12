@@ -27,7 +27,12 @@ export default function PhotosList() {
 
   const loadSavedPhotos = async () => {
     try {
-      const directory = `${FileSystem.documentDirectory}photos/`;
+      const directory = `${FileSystem.documentDirectory}fa-photos/`;
+      const isDirectoryExist = (await FileSystem.getInfoAsync(directory))
+        .exists;
+
+      if (!isDirectoryExist) return;
+
       const photosDirectory = await FileSystem.readDirectoryAsync(directory);
 
       const imageUris = photosDirectory.map(fileName => ({

@@ -13,13 +13,15 @@ import { Meal, MealComponent } from "../../types";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import RNPickerSelect from "react-native-picker-select";
+import { Picker } from "@react-native-picker/picker";
 import { availableComponents } from "../../constants/MealComponents";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function AddKCAL() {
   const [mealName, setMealName] = useState("");
-  const [selectedComponent, setSelectedComponent] = useState("");
+  const [selectedComponent, setSelectedComponent] = useState(
+    availableComponents[0].value
+  );
   const [componentAmount, setComponentAmount] = useState("");
   const [mealComponents, setMealComponents] = useState<MealComponent[]>([]);
   const [meals, setMeals] = useState<Meal[]>([]);
@@ -127,11 +129,18 @@ export default function AddKCAL() {
             onChangeText={text => setMealName(text)}
           />
           <Text style={styles.label}>Wybierz składnik</Text>
-          <RNPickerSelect
-            items={availableComponents}
+          <Picker
+            selectedValue={selectedComponent}
             onValueChange={value => setSelectedComponent(value)}
-            value={selectedComponent}
-          />
+          >
+            {availableComponents.map((component, index) => (
+              <Picker.Item
+                key={index}
+                label={component.label}
+                value={component.value}
+              />
+            ))}
+          </Picker>
           <Text style={styles.label}>Ilość(gramy)</Text>
           <TextInput
             style={styles.input}

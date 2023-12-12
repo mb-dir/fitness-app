@@ -84,7 +84,8 @@ export default function CurrentKCAL() {
       <View style={styles.header}>
         <Text style={styles.headerText}>Twoje dzisiejsze kalorie:</Text>
         <Text style={styles.headerText}>
-          {calculateTotalAmountForMeals(todayMeals)}/{savedKcalLimit}
+          {calculateTotalAmountForMeals(todayMeals).toFixed()}/{/* XDXD */}
+          {(+savedKcalLimit).toFixed(0)}
         </Text>
       </View>
       <FlatList
@@ -100,7 +101,8 @@ export default function CurrentKCAL() {
                   style={styles.componentItem}
                 >
                   <Text>
-                    {component.name} - {component.amount}g({component.kcal}kcal)
+                    {component.name} - {component.amount}g (
+                    {component.kcal.toFixed(0)}kcal)
                   </Text>
                 </View>
               ))}
