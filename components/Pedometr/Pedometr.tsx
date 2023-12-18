@@ -93,7 +93,7 @@ export default function StepCounter() {
     const currentAcceleration = Math.sqrt(x ** 2 + y ** 2 + z ** 2);
     if (
       prevAccelerationRef.current &&
-      Math.abs(currentAcceleration - prevAccelerationRef.current) >= 0.025
+      Math.abs(currentAcceleration - prevAccelerationRef.current) >= 0.028
     ) {
       setStepCount(prevCount => prevCount + 1);
     }
