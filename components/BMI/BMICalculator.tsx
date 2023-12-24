@@ -21,6 +21,13 @@ export default function BMICalculator() {
     if (height && weight) {
       const heightMeters = +height / 100;
       const weightKg = +weight;
+      if (heightMeters <= 0 || weightKg <= 0) {
+        Alert.alert("Błąd", "Podaj dane w prawidłowym formacie", [
+          { text: "OK" },
+        ]);
+        setBMI(null);
+        return;
+      }
       const bmiValue = weightKg / (heightMeters * heightMeters);
       setBMI(+bmiValue.toFixed(2));
       Keyboard.dismiss();

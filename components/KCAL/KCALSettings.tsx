@@ -17,7 +17,7 @@ export default function KCALSettings() {
 
   const saveKcalLimit = async () => {
     try {
-      if (kcalLimit !== "") {
+      if (kcalLimit && +kcalLimit > 0) {
         await AsyncStorage.setItem("kcalLimit", kcalLimit);
         setSavedKcalLimit(kcalLimit);
         Alert.alert("Informacja", "Limit kalorii został ustawiony", [
@@ -26,7 +26,9 @@ export default function KCALSettings() {
         setKcalLimit("");
         Keyboard.dismiss();
       } else {
-        Alert.alert("Debilem jesteś", "Ale cymbał xdXd", [{ text: "OK" }]);
+        Alert.alert("Błąd", "Uzupełnij dane w prawidłowym formacie", [
+          { text: "OK" },
+        ]);
       }
     } catch (error) {
       Alert.alert(

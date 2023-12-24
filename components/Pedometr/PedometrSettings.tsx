@@ -18,8 +18,8 @@ export default function PedometrSettings() {
   const isFocused = useIsFocused();
 
   const saveStepGoal = async () => {
-    if (!stepGoal) {
-      Alert.alert("Błąd", "Uzupełnij dane");
+    if (!stepGoal || +stepGoal <= 0) {
+      Alert.alert("Błąd", "Uzupełnij dane w prawidłowym formacie");
       return;
     }
     try {
