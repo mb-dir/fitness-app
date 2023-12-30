@@ -13,14 +13,8 @@ export default function Home() {
           "Obyś zawsze pamiętał, aby cieszyć się drogą, zwłaszcza gdy jest
           trudna"
         </Text>
-        <Text style={styles.author}>Kobe Bryant</Text>
-        <Image
-          style={styles.photo}
-          source={require("../../assets/images/kobe.png")}
-        ></Image>
+        <Text style={styles.author}>~Kobe Bryant</Text>
       </View>
-
-      <View style={styles.separator} />
     </View>
   );
 }
@@ -29,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
   },
   header: {
     fontSize: 36,
@@ -50,25 +45,12 @@ const styles = StyleSheet.create({
   },
   quote: {
     fontStyle: "italic",
-    color: "white",
-    zIndex: 9999,
+    fontSize: 10,
+    textAlign: "right",
   },
   author: {
     textAlign: "right",
-    color: "white",
-    zIndex: 9999,
     fontWeight: "bold",
-  },
-  photo: {
-    width: "120%",
-    height: "920%",
-    position: "absolute",
-    left: "-15%",
-    top: "15%",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+    fontSize: 10,
   },
 });
