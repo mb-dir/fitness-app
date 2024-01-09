@@ -38,6 +38,7 @@
     "react-native-pager-view": "^6.2.3",
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.0",
+    "react-native-torch": "^1.2.0",
     "react-native-web": "~0.19.6"
   },
   "devDependencies": {
