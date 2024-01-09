@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Vibration,
   View,
 } from "react-native";
 import { useEffect, useState } from "react";
@@ -49,6 +50,7 @@ export default function PhotosList() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
       console.error(error);
     }
   };
@@ -103,6 +105,7 @@ export default function PhotosList() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
       console.error(error);
     }
   };

@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  Vibration,
   View,
 } from "react-native";
 import {
@@ -105,6 +106,7 @@ export default function Camera() {
             "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
             [{ text: "OK" }]
           );
+          Vibration.vibrate(500);
           console.error(error);
         }
       }

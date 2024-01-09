@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  Vibration,
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ export default function PedometrSettings() {
   const saveStepGoal = async () => {
     if (!stepGoal || +stepGoal <= 0) {
       Alert.alert("Błąd", "Uzupełnij dane w prawidłowym formacie");
+      Vibration.vibrate(500);
       return;
     }
     try {
@@ -34,6 +36,7 @@ export default function PedometrSettings() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
       console.error("Error saving step goal:", error);
     }
   };
@@ -51,6 +54,7 @@ export default function PedometrSettings() {
           "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
           [{ text: "OK" }]
         );
+        Vibration.vibrate(500);
         console.error("Error loading step goal:", error);
       }
     };

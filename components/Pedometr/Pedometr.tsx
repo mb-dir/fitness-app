@@ -1,4 +1,11 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Vibration,
+  View,
+} from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 
 import { Accelerometer } from "expo-sensors";
@@ -48,6 +55,7 @@ export default function StepCounter() {
           "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
           [{ text: "OK" }]
         );
+        Vibration.vibrate(500);
       }
     };
 
@@ -64,6 +72,7 @@ export default function StepCounter() {
           "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
           [{ text: "OK" }]
         );
+        Vibration.vibrate(500);
       }
     };
 
@@ -82,6 +91,7 @@ export default function StepCounter() {
           "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
           [{ text: "OK" }]
         );
+        Vibration.vibrate(500);
       }
     };
 
@@ -115,6 +125,7 @@ export default function StepCounter() {
           "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
           [{ text: "OK" }]
         );
+        Vibration.vibrate(500);
         console.error("Error resetting step count in AsyncStorage:", error);
       }
     }

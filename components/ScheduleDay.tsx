@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Vibration,
   View,
 } from "react-native";
 import { useEffect, useState } from "react";
@@ -43,6 +44,7 @@ export default function ScheduleTrainingView({ day }: props) {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
       console.error(error);
     }
   };
@@ -50,6 +52,7 @@ export default function ScheduleTrainingView({ day }: props) {
   const addWorkout = async () => {
     if (!workout || !reps) {
       Alert.alert("Błąd", "Musisz wprowadzić wszystkie dane");
+      Vibration.vibrate(500);
       return;
     }
     const newWorkout: workout = { workout, reps };
@@ -70,6 +73,7 @@ export default function ScheduleTrainingView({ day }: props) {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
       console.error(error);
     }
   };
@@ -89,6 +93,7 @@ export default function ScheduleTrainingView({ day }: props) {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
       console.error(error);
     }
   };
