@@ -18,6 +18,7 @@
     "@react-native-picker/picker": "^2.6.1",
     "@react-navigation/material-top-tabs": "^6.6.5",
     "@react-navigation/native": "^6.1.9",
+    "@types/react-native-torch": "^1.1.2",
     "expo": "~49.0.15",
     "expo-camera": "~13.4.4",
     "expo-file-system": "~15.4.4",

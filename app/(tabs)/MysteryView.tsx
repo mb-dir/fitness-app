@@ -1,19 +1,30 @@
-import { Text, TouchableOpacity, Vibration } from "react-native";
+import React, { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
-import React from "react";
+import Torch from "react-native-torch";
 
 export default function MysteryView() {
-  const handleVibration = () => {
-    // Vibrate for 500 milliseconds
-    Vibration.vibrate(500);
+  const [flashOn, setFlashOn] = useState(false);
+
+  const toggleFlash = () => {
+    if (flashOn) {
+      Torch.switchState(true);
+    } else {
+      Torch.switchState(false);
+    }
+    setFlashOn(prev => !prev);
   };
 
   return (
-    <>
-      <TouchableOpacity onPress={handleVibration}>
-        <Text>Press to Vibrate</Text>
+    <View>
+      <TouchableOpacity
+        onPress={toggleFlash}
+        style={{ backgroundColor: "lightblue", padding: 10 }}
+      >
+        <Text style={{ color: "white" }}>
+          {flashOn ? "Turn Off Flash" : "Turn On Flash"}
+        </Text>
       </TouchableOpacity>
-      <Text>test</Text>
-    </>
+    </View>
   );
 }
