@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import Torch from "react-native-torch";
 
@@ -16,13 +16,35 @@ export default function MysteryView() {
   };
 
   return (
-    <View>
-      <TouchableOpacity
-        onPress={toggleFlash}
-        style={{ backgroundColor: "lightblue", padding: 10 }}
-      >
-        <Text style={{ color: "white" }}>{flashOn ? "Wyłącz" : "Włącz"}</Text>
+    <View style={styles.container}>
+      <Text style={styles.message}>
+        Nie masz pomysłu na trening? Oświeć się!
+      </Text>
+      <TouchableOpacity onPress={toggleFlash} style={styles.button}>
+        <Text style={styles.buttonText}>{flashOn ? "Wyłącz" : "Włącz"}</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  message: {
+    fontSize: 18,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: "#0077cc",
+    padding: 8,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+  },
+});
