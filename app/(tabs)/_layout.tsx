@@ -99,6 +99,18 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="MysteryView"
+        options={{
+          title: "?",
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name="crosshairs-question"
+              style={[styles.icon, { color: focused ? blue : color }]}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

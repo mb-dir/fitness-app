@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Vibration,
   View,
 } from "react-native";
 import { Meal, MealComponent } from "../../types";
@@ -49,9 +50,11 @@ export default function AddKCAL() {
         setSelectedComponent("");
       } else {
         Alert.alert("Błąd", "Nieprawidłowy składnik", [{ text: "OK" }]);
+        Vibration.vibrate(500);
       }
     } else {
       Alert.alert("Błąd", "Uzupełnij dane", [{ text: "OK" }]);
+      Vibration.vibrate(500);
     }
   };
 
@@ -80,6 +83,7 @@ export default function AddKCAL() {
         Alert.alert("Informacja", "Posiłek został dodany", [{ text: "OK" }]);
         Keyboard.dismiss();
       } else {
+        Vibration.vibrate(500);
         Alert.alert("Błąd", "Uzupełnij dane", [{ text: "OK" }]);
       }
     } catch (error) {
@@ -88,6 +92,7 @@ export default function AddKCAL() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
       console.error("Error saving meal:", error);
     }
   };
@@ -112,6 +117,7 @@ export default function AddKCAL() {
           "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
           [{ text: "OK" }]
         );
+        Vibration.vibrate(500);
         console.error("Error loading meals:", error);
       }
     };

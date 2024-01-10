@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  Vibration,
   View,
 } from "react-native";
 import {
@@ -32,7 +33,7 @@ export default function Camera() {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    (async () => {
+    const requestPermissions = async () => {
       const cameraPermission =
         await CameraComponent.requestCameraPermissionsAsync();
       const mediaLibraryPermission =
@@ -40,12 +41,24 @@ export default function Camera() {
 
       setHasCameraPermission(cameraPermission.status === "granted");
       setHasMediaLibraryPermission(mediaLibraryPermission.status === "granted");
-    })();
+    };
 
-    if (!isFocused) {
+    const cleanup = () => {
+      // Release camera resources cuz flashlight
+      if (cameraRef.current) {
+        cameraRef.current.pausePreview();
+      }
+    };
+
+    if (isFocused) {
+      requestPermissions();
+    } else {
+      cleanup();
       setHasCameraPermission(false);
       setHasMediaLibraryPermission(false);
     }
+
+    return cleanup;
   }, [isFocused]);
 
   const toggleCameraType = () => {
@@ -105,6 +118,7 @@ export default function Camera() {
             "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
             [{ text: "OK" }]
           );
+          Vibration.vibrate(500);
           console.error(error);
         }
       }

@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Vibration,
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -45,6 +46,7 @@ export default function KCALHistory() {
           "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
           [{ text: "OK" }]
         );
+        Vibration.vibrate(500);
         console.error("Error loading meals:", error);
       }
     };

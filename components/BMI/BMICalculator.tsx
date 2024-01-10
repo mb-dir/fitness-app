@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  Vibration,
   View,
 } from "react-native";
 import React, { useState } from "react";
@@ -25,6 +26,7 @@ export default function BMICalculator() {
         Alert.alert("Błąd", "Podaj dane w prawidłowym formacie", [
           { text: "OK" },
         ]);
+        Vibration.vibrate(500);
         setBMI(null);
         return;
       }
@@ -65,6 +67,7 @@ export default function BMICalculator() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
     }
   };
 

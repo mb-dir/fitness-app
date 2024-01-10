@@ -1,4 +1,11 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  Vibration,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -57,6 +64,7 @@ export default function CurrentKCAL() {
           "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
           [{ text: "OK" }]
         );
+        Vibration.vibrate(500);
         console.error("Error loading meals:", error);
       }
     };
@@ -72,6 +80,7 @@ export default function CurrentKCAL() {
           "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
           [{ text: "OK" }]
         );
+        Vibration.vibrate(500);
         console.error("Error loading kcal limit:", error);
       }
     };

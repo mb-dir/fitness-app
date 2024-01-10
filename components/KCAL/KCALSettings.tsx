@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  Vibration,
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -26,6 +27,7 @@ export default function KCALSettings() {
         setKcalLimit("");
         Keyboard.dismiss();
       } else {
+        Vibration.vibrate(500);
         Alert.alert("Błąd", "Uzupełnij dane w prawidłowym formacie", [
           { text: "OK" },
         ]);
@@ -36,6 +38,7 @@ export default function KCALSettings() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
       console.error(error);
     }
   };
@@ -53,6 +56,7 @@ export default function KCALSettings() {
         "Wystąpił nieoczekiwany błąd, skontaktuj się z administratorem",
         [{ text: "OK" }]
       );
+      Vibration.vibrate(500);
     }
   };
 
