@@ -8,9 +8,9 @@ export default function MysteryView() {
 
   const toggleFlash = () => {
     if (flashOn) {
-      Torch.switchState(true);
-    } else {
       Torch.switchState(false);
+    } else {
+      Torch.switchState(true);
     }
     setFlashOn(prev => !prev);
   };
@@ -21,9 +21,7 @@ export default function MysteryView() {
         onPress={toggleFlash}
         style={{ backgroundColor: "lightblue", padding: 10 }}
       >
-        <Text style={{ color: "white" }}>
-          {flashOn ? "Turn Off Flash" : "Turn On Flash"}
-        </Text>
+        <Text style={{ color: "white" }}>{flashOn ? "Wyłącz" : "Włącz"}</Text>
       </TouchableOpacity>
     </View>
   );
